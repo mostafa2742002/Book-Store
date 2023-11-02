@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.book_store.full.data.Book;
-import com.book_store.full.data.User;
 import com.book_store.full.services.Admin_Service;
 
 @RestController

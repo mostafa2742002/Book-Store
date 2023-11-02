@@ -31,7 +31,6 @@ public class User_controller {
         return home_service.home();
     }
 
-
     @PostMapping("/addstar")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public void addstar(@RequestBody JsonNode jsonNode) {
@@ -78,7 +77,7 @@ public class User_controller {
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public void removeorder(@RequestBody Order order) {
         user_service.removeorder(order);
-        
+
     }
 
     @GetMapping("/getorders")
@@ -86,5 +85,5 @@ public class User_controller {
     public List<Order> getorders(@RequestParam String user_id) {
         return user_service.getorders(user_id);
     }
-    
+
 }

@@ -23,10 +23,10 @@ public class Home_Controller {
     private Home_Service home_service;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private JwtService jwtService;
 
     @Autowired
-    private JwtService jwtService;
+    private AuthenticationManager authenticationManager;
 
     @GetMapping("/home")
     public List<Book> home() {

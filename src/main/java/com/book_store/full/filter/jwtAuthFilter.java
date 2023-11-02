@@ -9,8 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import com.book_store.full.data.User;
 import com.book_store.full.security.UserInfoUserDetailsService;
 import com.book_store.full.services.JwtService;
 
