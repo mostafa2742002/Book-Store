@@ -31,7 +31,7 @@ public class Home_Service {
     public List<Book> resentllyadded() {
         List<Book> books = book_repo.findAll();
         if (books.size() > 10) {
-            return books.subList(0, 10);
+            return books.subList(0, 4);
         }
         return books;
     }
@@ -39,7 +39,7 @@ public class Home_Service {
     public List<Book> topselling() {
         List<Book> books = book_repo.findAll(Sort.by(Sort.Direction.DESC, "buyed"));
         if (books.size() > 10) {
-            return books.subList(0, 10);
+            return books.subList(0, 4);
         }
         return books;
     }

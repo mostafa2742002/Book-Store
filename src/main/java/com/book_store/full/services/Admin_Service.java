@@ -28,4 +28,9 @@ public class Admin_Service {
     public void adduser(User user) {
         user_repo.save(user);
     }
+
+    public void updatebook(Book book) {
+        book_repo.save(book);
+    }
+    
 }

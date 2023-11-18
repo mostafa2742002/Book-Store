@@ -28,4 +28,9 @@ public class Admin_controller {
         admin_service.removebook(book_id);
     }
     
+    @PostMapping("/updatebook")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public void updatebook(@RequestBody Book book) {
+        admin_service.updatebook(book);
+    }
 }

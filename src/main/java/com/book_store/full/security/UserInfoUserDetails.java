@@ -13,13 +13,13 @@ import com.book_store.full.data.User;
 
 public class UserInfoUserDetails implements UserDetails{
 
-    private String name;
+    private String email;
     private String password;
     private List<GrantedAuthority> grantedAuthorities;
 
     public UserInfoUserDetails(User user)
     {
-        name = user.getName();
+        email = user.getEmail();
         password = user.getPassword();
         grantedAuthorities = Arrays.stream(user.getRoles().split(","))
                 .map(SimpleGrantedAuthority::new)
@@ -38,7 +38,7 @@ public class UserInfoUserDetails implements UserDetails{
 
     @Override
     public String getUsername() {
-        return name;
+        return email;
     }
 
     @Override
