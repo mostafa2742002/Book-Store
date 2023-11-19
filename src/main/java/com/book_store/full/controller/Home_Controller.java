@@ -28,14 +28,13 @@ public class Home_Controller {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @GetMapping("/")
-    public String wellcome() {
-        return "wellcome";
-    }
-
+    // @GetMapping("/home")
+    // public List<Book> home() {
+    //     return home_service.home();
+    // }
     @GetMapping("/home")
-    public List<Book> home() {
-        return home_service.home();
+    public String home() {
+        return "Wellcome to Book Store";
     }
 
     @GetMapping("/home/resentllyadded")
