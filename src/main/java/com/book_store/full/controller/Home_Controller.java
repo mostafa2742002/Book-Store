@@ -28,13 +28,9 @@ public class Home_Controller {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    // @GetMapping("/home")
-    // public List<Book> home() {
-    //     return home_service.home();
-    // }
     @GetMapping("/home")
-    public String home() {
-        return "Wellcome to Book Store";
+    public List<Book> home() {
+        return home_service.home();
     }
 
     @GetMapping("/home/resentllyadded")
