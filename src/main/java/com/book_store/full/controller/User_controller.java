@@ -18,7 +18,7 @@ import com.book_store.full.services.User_Service;
 import com.fasterxml.jackson.databind.JsonNode;
 
 @RestController
-@CrossOrigin(origins = "http://127.0.0.1:5501")
+@CrossOrigin(origins = "*")
 public class User_controller {
 
     @Autowired

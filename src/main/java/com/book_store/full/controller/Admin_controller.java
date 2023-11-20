@@ -11,7 +11,7 @@ import com.book_store.full.data.Book;
 import com.book_store.full.services.Admin_Service;
 
 @RestController
-@CrossOrigin(origins = "http://127.0.0.1:5501")
+@CrossOrigin(origins = "*")
 public class Admin_controller {
     
 

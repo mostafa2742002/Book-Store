@@ -18,7 +18,7 @@ import com.book_store.full.services.Home_Service;
 import com.book_store.full.services.JwtService;
 
 @RestController
-@CrossOrigin(origins = "http://127.0.0.1:5501")
+@CrossOrigin(origins = "*")
 public class Home_Controller {
     
     @Autowired
