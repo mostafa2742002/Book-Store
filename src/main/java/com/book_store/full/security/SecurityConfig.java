@@ -58,8 +58,8 @@ public class SecurityConfig {
                 .and()
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
-                .cors(Customizer.withDefaults())
                 .build();
+                // .cors(Customizer.withDefaults())
     }
 
     @Bean

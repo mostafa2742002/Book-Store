@@ -2,6 +2,7 @@ package com.book_store.full.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +11,7 @@ import com.book_store.full.data.Book;
 import com.book_store.full.services.Admin_Service;
 
 @RestController
+@CrossOrigin(origins = "http://127.0.0.1:5501")
 public class Admin_controller {
     
 
