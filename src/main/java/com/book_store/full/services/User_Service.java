@@ -2,6 +2,7 @@ package com.book_store.full.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -95,5 +96,18 @@ public class User_Service {
             order.add(order_repo.findById(id).get());
         }
         return order;
+    }
+
+    public User get_user(String t, String email,String pass)
+    {
+        Optional<User> u = user_repo.findByEmail(email);
+        if(u.isEmpty())
+        {
+            return null;
+        }
+        User user = u.get();
+        user.setToken(t);
+
+        return user;
     }
 }

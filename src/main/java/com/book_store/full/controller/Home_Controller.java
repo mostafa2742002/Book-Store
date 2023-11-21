@@ -16,6 +16,7 @@ import com.book_store.full.data.Book;
 import com.book_store.full.data.User;
 import com.book_store.full.services.Home_Service;
 import com.book_store.full.services.JwtService;
+import com.book_store.full.services.User_Service;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -29,6 +30,9 @@ public class Home_Controller {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private User_Service user_Service;
 
     @GetMapping("/home")
     public List<Book> home() {
@@ -52,12 +56,13 @@ public class Home_Controller {
     }
     
     @PostMapping("/home/authenticate")
-    public String authenticateAndGetToken(@RequestBody AuthRequest authRequest)
+    public User authenticateAndGetToken(@RequestBody AuthRequest authRequest)
     {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
         if(authentication.isAuthenticated())
         {
-            return jwtService.generateToken(authRequest.getEmail());
+            String t = jwtService.generateToken(authRequest.getEmail());
+            return user_Service.get_user(t,authRequest.getEmail(),authRequest.getPassword());
         }
         else 
         {

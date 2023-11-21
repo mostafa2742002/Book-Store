@@ -20,11 +20,11 @@ public class User {
     private String email;
     private String password;
     private String phone;
+    private String token;
     private String image;
     private String gender;
     private List<String> cart;
     private List<String> star;
     private List<String> order;
     private String roles;
-    
 }
