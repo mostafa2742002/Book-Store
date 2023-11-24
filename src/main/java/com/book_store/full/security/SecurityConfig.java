@@ -24,22 +24,22 @@ import com.book_store.full.filter.jwtAuthFilter;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    
+
     @Autowired
     private jwtAuthFilter authFilter;
 
     @Bean
-    //authentication
+    // authentication
     public UserDetailsService userDetailsService() {
-//        UserDetails admin = User.withUsername("Basant")
-//                .password(encoder.encode("Pwd1"))
-//                .roles("ADMIN")
-//                .build();
-//        UserDetails user = User.withUsername("John")
-//                .password(encoder.encode("Pwd2"))
-//                .roles("USER","ADMIN","HR")
-//                .build();
-//        return new InMemoryUserDetailsManager(admin, user);
+        // UserDetails admin = User.withUsername("Basant")
+        // .password(encoder.encode("Pwd1"))
+        // .roles("ADMIN")
+        // .build();
+        // UserDetails user = User.withUsername("John")
+        // .password(encoder.encode("Pwd2"))
+        // .roles("USER","ADMIN","HR")
+        // .build();
+        // return new InMemoryUserDetailsManager(admin, user);
         return new UserInfoUserDetailsService();
     }
 
@@ -47,7 +47,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeRequests()
-                .requestMatchers("/home", "/home/addnewuser", "/home/authenticate", "/home/topselling" , "/home/resentllyadded" , "/home/validateToken")
+                .requestMatchers("/home", "/home/addnewuser", "/home/authenticate", "/home/topselling",
+                        "/home/resentllyadded", "/home/validateToken", "/home/addnewuser", "/home/verifyemail")
                 .permitAll()
                 .and()
                 .authorizeRequests()
@@ -59,7 +60,7 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
-                // .cors(Customizer.withDefaults())
+        // .cors(Customizer.withDefaults())
     }
 
     @Bean
@@ -68,12 +69,13 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider authenticationProvider=new DaoAuthenticationProvider();
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService());
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
@@ -81,4 +83,5 @@ public class SecurityConfig {
 
 }
 // MvcRequestMatcher
-//.requestMatchers(antMatcher("/home"), antMatcher("/home/addnewuser"), antMatcher("/home/authenticate"))
+// .requestMatchers(antMatcher("/home"), antMatcher("/home/addnewuser"),
+// antMatcher("/home/authenticate"))

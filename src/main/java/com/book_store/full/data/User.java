@@ -27,4 +27,7 @@ public class User {
     private List<String> star;
     private List<String> order;
     private String roles;
+    private boolean emailVerified;
+    private String verificationToken;
+
 }
