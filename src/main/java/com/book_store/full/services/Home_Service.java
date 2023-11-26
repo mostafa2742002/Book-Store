@@ -147,4 +147,10 @@ public class Home_Service {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid Token");
         }
     }
+
+    public List<Book> search(String search) {
+        return book_repo
+                .findByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContainingOrCategoryIgnoreCaseContainingOrTranslatorIgnoreCaseContainingOrPublisherIgnoreCaseContaining(
+                        search, search, search, search, search);
+    }
 }

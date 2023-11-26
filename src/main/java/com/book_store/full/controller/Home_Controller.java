@@ -2,7 +2,6 @@ package com.book_store.full.controller;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,6 @@ import com.book_store.full.data.AuthRequest;
 import com.book_store.full.data.Book;
 import com.book_store.full.data.User;
 import com.book_store.full.services.Home_Service;
-
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -60,5 +58,10 @@ public class Home_Controller {
     @GetMapping("/home/validateToken")
     public ResponseEntity<?> validateToken(@RequestParam String token) {
         return home_service.validateToken(token);
+    }
+
+    @GetMapping("/home/search")
+    public List<Book> search(@RequestParam String search) {
+        return home_service.search(search);
     }
 }

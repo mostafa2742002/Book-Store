@@ -48,7 +48,8 @@ public class SecurityConfig {
         return http.csrf().disable()
                 .authorizeRequests()
                 .requestMatchers("/home", "/home/addnewuser", "/home/authenticate", "/home/topselling",
-                        "/home/resentllyadded", "/home/validateToken", "/home/addnewuser", "/home/verifyemail")
+                        "/home/resentllyadded", "/home/validateToken", "/home/addnewuser", "/home/verifyemail",
+                        "/home/search")
                 .permitAll()
                 .and()
                 .authorizeRequests()
