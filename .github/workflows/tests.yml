@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        mongodb-version: ['6.0']
+        mongodb-version: ['4.2', '4.4', '5.0', '6.0']
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
@@ -19,7 +19,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('pom.xml') }}
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.10.0
