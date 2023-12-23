@@ -26,6 +26,6 @@ jobs:
         with:
            mongodb-version: ${{ matrix.mongodb-version }}
       - name: Run tests with Maven
-        run: mvn -B test --file UserClass/users/pom.xml
+        run: mvn -B test --file pom.xml
     env:
         CI: true
