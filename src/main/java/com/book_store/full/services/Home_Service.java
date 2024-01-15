@@ -1,5 +1,6 @@
 package com.book_store.full.services;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,11 @@ import com.book_store.full.data.UserResponse;
 import com.book_store.full.repository.Book_Repo;
 import com.book_store.full.repository.User_Repo;
 import com.book_store.full.security.UserInfoUserDetailsService;
+import com.book_store.full.validation.Home_Service_validation;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.apache.catalina.connector.Response;
 
 @Service
 public class Home_Service {
@@ -49,37 +55,60 @@ public class Home_Service {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public List<Book> home() {
-        return book_repo.findAll();
+    // @Autowired
+    // private Home_Service_validation home_validation;
+
+    public ResponseEntity<List<Book>> home() {
+        try {
+            return ResponseEntity.ok(book_repo.findAll());
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+
+        }
     }
 
-    public List<Book> resentllyadded() {
-        List<Book> books = book_repo.findAll();
-        if (books.size() > 10) {
-            return books.subList(0, 4);
+    public ResponseEntity<List<Book>> resentllyadded() {
+        try {
+            List<Book> books = book_repo.findAll();
+
+            if (books.size() > 10) {
+                return ResponseEntity.ok(books.subList(0, 4));
+            }
+
+            return ResponseEntity.ok(books);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+
         }
-        return books;
     }
 
-    public List<Book> topselling() {
-        List<Book> books = book_repo.findAll(Sort.by(Sort.Direction.DESC, "buyed"));
-        if (books.size() > 10) {
-            return books.subList(0, 4);
+    public ResponseEntity<List<Book>> topselling() {
+        try {
+            List<Book> books = book_repo.findAll(Sort.by(Sort.Direction.DESC, "buyed"));
+
+            if (books.size() > 10) {
+                return ResponseEntity.ok(books.subList(0, 4));
+            }
+
+            return ResponseEntity.ok(books);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+
         }
-        return books;
     }
 
     public ResponseEntity<String> addUser(User user) {
         try {
-
             String verificationToken = jwtService.generateToken(user.getEmail());
 
             user.setEmailVerified(false);
             user.setVerificationToken(verificationToken);
-
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            User savedUser = user_repo.save(user);
 
+            User savedUser = user_repo.save(user);
             String subject = "Verify Your Email";
             String body = "Click the link to verify your email: https://bookstore-cs41.onrender.com/home/verifyemail?token="
                     + verificationToken;
@@ -87,15 +116,17 @@ public class Home_Service {
             emailService.sendEmail(savedUser.getEmail(), subject, body);
 
             return ResponseEntity.ok("User registered successfully. Check your email for verification.");
+
         } catch (Exception e) {
-            System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error registering user");
+
         }
     }
 
     public ResponseEntity<String> verifyEmail(String token) {
         String email = jwtService.extractEmail(token);
         Optional<User> user = user_repo.findByEmail(email);
+
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
@@ -105,52 +136,64 @@ public class Home_Service {
             user1.setEmailVerified(true);
             user1.setVerificationToken(null);
             user_repo.save(user1);
+
             return ResponseEntity.ok("Email verified successfully");
+
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid Token");
+
         }
     }
 
-    public User authenticateAndGetToken(AuthRequest authRequest) {
+    public ResponseEntity<User> authenticateAndGetToken(AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
+
         if (authentication.isAuthenticated()) {
             String t = jwtService.generateToken(authRequest.getEmail());
-            return user_Service.get_user(t, authRequest.getEmail(), authRequest.getPassword());
+            return ResponseEntity.ok(user_Service.get_user(t, authRequest.getEmail(), authRequest.getPassword()));
+
         } else {
             throw new RuntimeException("Authentication failed");
+
         }
     }
 
     public ResponseEntity<?> validateToken(String token) {
         String email = jwtService.extractEmail(token);
 
-        if (email != null) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-
-            if (jwtService.validateToken(token, userDetails)) {
-                Optional<User> user = user_repo.findByEmail(email);
-
-                if (user != null) {
-                    // Create a custom response JSON object
-                    User user1 = user.get();
-                    UserResponse userResponse = new UserResponse(userDetails, user1);
-                    return ResponseEntity.ok(userResponse);
-                } else {
-                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-                }
-
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid Token");
-            }
-        } else {
+        if (email == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid Token");
         }
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+
+        if (!jwtService.validateToken(token, userDetails)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid Token");
+        }
+
+        Optional<User> user = user_repo.findByEmail(email);
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+        // Create a custom response JSON object
+        User user1 = user.get();
+        UserResponse userResponse = new UserResponse(userDetails, user1);
+
+        return ResponseEntity.ok(userResponse);
+
     }
 
-    public List<Book> search(String search) {
-        return book_repo
+    public ResponseEntity<List<Book>> search(String search) {
+        if (search == null || search.trim().isEmpty()) {
+            return ResponseEntity.ok(Collections.emptyList());
+        }
+
+        return ResponseEntity.ok(book_repo
                 .findByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContainingOrCategoryIgnoreCaseContainingOrTranslatorIgnoreCaseContainingOrPublisherIgnoreCaseContaining(
-                        search, search, search, search, search);
+                        search, search, search, search, search));
+
     }
+
 }

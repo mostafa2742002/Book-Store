@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.book_store.full.data.Order;
@@ -51,11 +52,13 @@ public class User_ServiceTest {
         when(user_repo.findById("1")).thenReturn(Optional.of(user));
 
         // Act
-        user_Service.addstar("1", "bookId");
+        ResponseEntity<String> added =  user_Service.addStar("1", "bookId");
 
         // Assert
         verify(user_repo, times(1)).save(user);
+        assertEquals("Book added to stars successfully", added.getBody());
         assertEquals(1, user.getStar().size());
+
     }
 
     @Test
@@ -69,11 +72,13 @@ public class User_ServiceTest {
         when(user_repo.findById("1")).thenReturn(Optional.of(user));
 
         // Act
-        user_Service.removestar("1", "bookId");
+        ResponseEntity<String> removed = user_Service.removeStar("1", "bookId");
 
         // Assert
         verify(user_repo, times(1)).save(user);
+        assertEquals("Book removed from stars successfully", removed.getBody());
         assertEquals(0, user.getStar().size());
+        
     }
 
     @Test
@@ -86,10 +91,11 @@ public class User_ServiceTest {
         when(user_repo.findById("1")).thenReturn(Optional.of(user));
 
         // Act
-        user_Service.addcart("1", "bookId");
+        ResponseEntity<String> added = user_Service.addCart("1", "bookId");
 
         // Assert
         verify(user_repo, times(1)).save(user);
+        assertEquals("Book added to the cart successfully", added.getBody());
         assertEquals(1, user.getCart().size());
     }
 
@@ -104,10 +110,11 @@ public class User_ServiceTest {
         when(user_repo.findById("1")).thenReturn(Optional.of(user));
 
         // Act
-        user_Service.removecart("1", "bookId");
+        ResponseEntity<String> removed = user_Service.removeCart("1", "bookId");
 
         // Assert
         verify(user_repo, times(1)).save(user);
+        assertEquals("Book removed from the cart successfully", removed.getBody());
         assertEquals(0, user.getCart().size());
     }
 
@@ -126,12 +133,13 @@ public class User_ServiceTest {
         when(user_repo.findById("userId")).thenReturn(Optional.of(user));
 
         // Act
-        user_Service.addorder(order);
+        ResponseEntity<String> added =  user_Service.addOrder(order);
 
         // Assert
         verify(order_repo, times(1)).save(order);
         verify(user_repo, times(1)).save(user);
         assertEquals(1, user.getOrder().size());
+        assertEquals("Order added successfully", added.getBody());
     }
 
     // @Test
@@ -172,12 +180,14 @@ public class User_ServiceTest {
         when(order_repo.findById("orderId")).thenReturn(Optional.of(order));
 
         // Act
-        List<Order> orders = user_Service.getorders("userId");
+        ResponseEntity<List<Order>> orders = user_Service.getOrders("userId");
 
         // Assert
         assertNotNull(orders);
-        assertEquals(1, orders.size());
-        assertEquals("orderId", orders.get(0).getId());
+        assertTrue(orders.hasBody());
+        assertEquals(1, orders.getBody().size());
+        assertEquals("orderId", orders.getBody().get(0).getId());
+
     }
 
     @Test

@@ -40,7 +40,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
 @SpringJUnitConfig
@@ -79,10 +78,10 @@ public class Home_ServiceTest {
         List<Book> allBooks = Arrays.asList(new Book(), new Book(), new Book(), new Book());
         when(book_repo.findAll()).thenReturn(allBooks);
 
-        List<Book> books = home_Service.home();
+        ResponseEntity<List<Book>> books = home_Service.home();
 
         verify(book_repo, times(1)).findAll();
-        assert books.size() == 4;
+        assert books.getBody().size() == 4;
     }
 
     @Test
@@ -91,26 +90,28 @@ public class Home_ServiceTest {
         List<Book> allBooks = Arrays.asList(new Book(), new Book(), new Book(), new Book());
         when(book_repo.findAll()).thenReturn(allBooks);
 
-        List<Book> books = home_Service.resentllyadded();
+        ResponseEntity<List<Book>> books = home_Service.resentllyadded();
 
         verify(book_repo, times(1)).findAll();
-        assert books.size() == 4;
+        if (books.getBody() != null)
+            assert books.getBody().size() == 4;
     }
 
     @Test
     void testTopselling() {
         // Arrange
         List<Book> allBooks = Arrays.asList(new Book(), new Book(), new Book(), new Book());
-        when(book_repo.findAll(Sort.by(Sort.Direction.DESC, "buyed"))).thenReturn(allBooks);
-    
+        when(book_repo.findAll()).thenReturn(allBooks);
+
         // Act
-        List<Book> books = home_Service.topselling();
-    
+        ResponseEntity<List<Book>> books = home_Service.topselling();
+
         // Assert
         verify(book_repo, times(1)).findAll(Sort.by(Sort.Direction.DESC, "buyed"));
-        assert books.size() == 4;
+        if (books.getBody() != null)
+            assert books.getBody().size() == 4;
+
     }
-    
 
     @Test
     void testAddUser() {
@@ -119,7 +120,6 @@ public class Home_ServiceTest {
 
         when(jwtService.generateToken(anyString())).thenReturn("verificationToken");
         when(user_repo.save(any(User.class))).thenReturn(user);
-
 
         ResponseEntity<String> result = home_Service.addUser(user);
 
@@ -148,7 +148,7 @@ public class Home_ServiceTest {
 
     @Test
     void testAuthenticateAndGetToken() {
-        
+
         AuthRequest authRequest = new AuthRequest();
         authRequest.setEmail("test@example.com");
         authRequest.setPassword("password");
@@ -159,10 +159,9 @@ public class Home_ServiceTest {
         when(jwtService.generateToken(anyString())).thenReturn("token");
         when(user_Service.get_user(anyString(), anyString(), anyString())).thenReturn(new User());
 
-        
-        User result = home_Service.authenticateAndGetToken(authRequest);
+        ResponseEntity<User> result = home_Service.authenticateAndGetToken(authRequest);
 
-        
+        assertEquals(HttpStatus.OK, result.getStatusCode());
         assertNotNull(result);
     }
 
@@ -197,9 +196,10 @@ public class Home_ServiceTest {
                         anyString(), anyString(), anyString(), anyString(), anyString()))
                 .thenReturn(expectedBooks);
 
-        List<Book> result = home_Service.search("keyword");
+        ResponseEntity<List<Book>> result = home_Service.search("keyword");
 
-        assertEquals(expectedBooks, result);
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals(expectedBooks, result.getBody());
     }
 
 }

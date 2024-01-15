@@ -26,17 +26,17 @@ public class Home_Controller {
     private Home_Service home_service;
 
     @GetMapping("/home")
-    public List<Book> home() {
+    public ResponseEntity<List<Book>> home() {
         return home_service.home();
     }
 
     @GetMapping("/home/resentllyadded")
-    public List<Book> resentllyadded() {
+    public ResponseEntity<List<Book>> resentllyadded() {
         return home_service.resentllyadded();
     }
 
     @GetMapping("/home/topselling")
-    public List<Book> topselling() {
+    public ResponseEntity<List<Book>> topselling() {
         return home_service.topselling();
     }
 
@@ -51,7 +51,7 @@ public class Home_Controller {
     }
 
     @PostMapping("/home/authenticate")
-    public User authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<User> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
         return home_service.authenticateAndGetToken(authRequest);
     }
 
@@ -61,7 +61,7 @@ public class Home_Controller {
     }
 
     @GetMapping("/home/search")
-    public List<Book> search(@RequestParam String search) {
+    public ResponseEntity<List<Book>> search(@RequestParam String search) {
         return home_service.search(search);
     }
 }
