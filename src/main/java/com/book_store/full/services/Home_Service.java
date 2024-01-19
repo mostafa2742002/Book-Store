@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 import com.book_store.full.data.AuthRequest;
 import com.book_store.full.data.Book;
 import com.book_store.full.data.User;
@@ -58,45 +59,44 @@ public class Home_Service {
     // @Autowired
     // private Home_Service_validation home_validation;
 
-    public ResponseEntity<List<Book>> home() {
+    public List<Book> home() {
         try {
-            return ResponseEntity.ok(book_repo.findAll());
+            return book_repo.findAll();
 
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return Collections.emptyList();
 
         }
     }
 
-    public ResponseEntity<List<Book>> resentllyadded() {
+    public List<Book> resentllyadded() {
         try {
             List<Book> books = book_repo.findAll();
 
-            if (books.size() > 10) {
-                return ResponseEntity.ok(books.subList(0, 4));
+            if (books.size() > 4) {
+                return books.subList(0, 4);
             }
 
-            return ResponseEntity.ok(books);
+            return books;
 
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return Collections.emptyList();
 
         }
     }
 
-    public ResponseEntity<List<Book>> topselling() {
+    public List<Book> topselling() {
         try {
             List<Book> books = book_repo.findAll(Sort.by(Sort.Direction.DESC, "buyed"));
 
-            if (books.size() > 10) {
-                return ResponseEntity.ok(books.subList(0, 4));
+            if (books.size() > 4) {
+                return books.subList(0, 4);
             }
 
-            return ResponseEntity.ok(books);
+            return books;
 
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-
+            return Collections.emptyList();
         }
     }
 

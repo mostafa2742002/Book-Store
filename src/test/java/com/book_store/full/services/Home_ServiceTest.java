@@ -78,10 +78,10 @@ public class Home_ServiceTest {
         List<Book> allBooks = Arrays.asList(new Book(), new Book(), new Book(), new Book());
         when(book_repo.findAll()).thenReturn(allBooks);
 
-        ResponseEntity<List<Book>> books = home_Service.home();
+        List<Book> books = home_Service.home();
 
         verify(book_repo, times(1)).findAll();
-        assert books.getBody().size() == 4;
+        assert books.size() == 4;
     }
 
     @Test
@@ -90,26 +90,24 @@ public class Home_ServiceTest {
         List<Book> allBooks = Arrays.asList(new Book(), new Book(), new Book(), new Book());
         when(book_repo.findAll()).thenReturn(allBooks);
 
-        ResponseEntity<List<Book>> books = home_Service.resentllyadded();
+        List<Book> books = home_Service.resentllyadded();
 
         verify(book_repo, times(1)).findAll();
-        if (books.getBody() != null)
-            assert books.getBody().size() == 4;
+        assert books.size() == 4;
     }
 
     @Test
     void testTopselling() {
-        // Arrange
+
         List<Book> allBooks = Arrays.asList(new Book(), new Book(), new Book(), new Book());
-        when(book_repo.findAll()).thenReturn(allBooks);
 
-        // Act
-        ResponseEntity<List<Book>> books = home_Service.topselling();
+        when(book_repo.findAll(Sort.by(Sort.Direction.DESC, "buyed"))).thenReturn(allBooks);
 
-        // Assert
+        List<Book> books = home_Service.topselling();
+
         verify(book_repo, times(1)).findAll(Sort.by(Sort.Direction.DESC, "buyed"));
-        if (books.getBody() != null)
-            assert books.getBody().size() == 4;
+
+        assert books.size() == 4;
 
     }
 

@@ -3,7 +3,7 @@ package com.book_store.full.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,17 +26,18 @@ public class Home_Controller {
     private Home_Service home_service;
 
     @GetMapping("/home")
-    public ResponseEntity<List<Book>> home() {
+    @Cacheable(value = "home")
+    public List<Book> home() {
         return home_service.home();
     }
 
     @GetMapping("/home/resentllyadded")
-    public ResponseEntity<List<Book>> resentllyadded() {
+    public List<Book> resentllyadded() {
         return home_service.resentllyadded();
     }
 
     @GetMapping("/home/topselling")
-    public ResponseEntity<List<Book>> topselling() {
+    public List<Book> topselling() {
         return home_service.topselling();
     }
 

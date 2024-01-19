@@ -1,13 +1,15 @@
 package com.book_store.full.data;
 
+import java.io.Serializable;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
+import java.io.Serializable;
 import lombok.Data;
 
 @Data
 @Document(collection = "books")
-public class Book {
+public class Book implements Serializable{
     
     @Id
     private String  id;
@@ -20,5 +22,5 @@ public class Book {
     private String  book_information;
     private String  author_information;
     private String  image;
-    private int  buyed;
+    private int     buyed;
 }
