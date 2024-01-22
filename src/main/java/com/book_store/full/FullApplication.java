@@ -15,4 +15,8 @@ public class FullApplication {
 	}
 	// sudo systemctl start mongod
 	// sudo systemctl status mongod
+
+	// sudo systemctl enable docker
+	// sudo systemctl start docker
+	// sudo systemctl status docker
 }

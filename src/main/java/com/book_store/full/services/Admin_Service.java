@@ -24,54 +24,54 @@ public class Admin_Service {
     @Autowired
     Admin_Service_validation admin_validation;
 
-    public ResponseEntity<String> addbook(Book book) {
+    public String addbook(Book book) {
         try {
-            ResponseEntity<String> response = admin_validation.validatebook(book);
+            String response = admin_validation.validatebook(book);
 
             if (response != null) {
                 return response;
             }
 
             book_repo.save(book);
-            return ResponseEntity.ok("Book added successfully");
+            return "Book added successfully";
 
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while adding book");
+            return "Error while adding book";
         }
-        
+
     }
 
-    public ResponseEntity<String> removebook(String book_id) {
+    public String removebook(String book_id) {
         try {
-            ResponseEntity<String> response = admin_validation.validatebookid(book_id);
+            String response = admin_validation.validatebookid(book_id);
 
             if (response != null) {
                 return response;
             }
 
             book_repo.deleteById(book_id);
-            return ResponseEntity.ok("Book removed successfully");
+            return "Book removed successfully";
 
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while adding book");
+            return "Error while adding book";
         }
     }
 
-    public ResponseEntity<String> updatebook(Book book) {
+    public String updatebook(Book book) {
         try {
             String book_id = book.getId();
-            ResponseEntity<String> response = admin_validation.validatebookid(book_id);
-            ResponseEntity<String> response2 = admin_validation.validatebook(book);
-            
+            String response = admin_validation.validatebookid(book_id);
+            String response2 = admin_validation.validatebook(book);
+
             if (response != null || response2 != null) {
                 return response;
             }
 
             book_repo.save(book);
-            return ResponseEntity.ok("Book updated successfully");
+            return "Book updated successfully";
 
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while adding book");
+            return "Error while adding book";
         }
     }
 

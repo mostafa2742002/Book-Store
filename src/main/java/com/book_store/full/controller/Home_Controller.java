@@ -26,18 +26,20 @@ public class Home_Controller {
     private Home_Service home_service;
 
     @GetMapping("/home")
-    @Cacheable(value = "home")
+    @Cacheable(value = "booksHome")
     public List<Book> home() {
         return home_service.home();
     }
 
     @GetMapping("/home/resentllyadded")
-    public List<Book> resentllyadded() {
+    @Cacheable(value = "booksRecentlyAdded")
+    public List<Book> recentlyAdded() {
         return home_service.resentllyadded();
     }
 
     @GetMapping("/home/topselling")
-    public List<Book> topselling() {
+    @Cacheable(value = "booksTopSelling")
+    public List<Book> topSelling() {
         return home_service.topselling();
     }
 

@@ -44,12 +44,12 @@ public class Admin_ServiceTest {
 
 
         
-        ResponseEntity<String> added = admin_Service.addbook(book);
+        String added = admin_Service.addbook(book);
 
         assertNotNull(added);
-        assertNotNull(added.getBody());
+        assertNotNull(added);
         verify(book_repo, times(1)).save(book);
-        assertEquals("Book added successfully", added.getBody());
+        assertEquals("Book added successfully", added);
     }
 
     @Test
@@ -59,13 +59,13 @@ public class Admin_ServiceTest {
         when(admin_validation.validatebookid(bookId)).thenReturn(null);
 
         
-        ResponseEntity<String> removed = admin_Service.removebook(bookId);
+        String removed = admin_Service.removebook(bookId);
 
         
         assertNotNull(removed);
-        assertNotNull(removed.getBody());
+        assertNotNull(removed);
         verify(book_repo, times(1)).deleteById(bookId);
-        assertEquals("Book removed successfully", removed.getBody());
+        assertEquals("Book removed successfully", removed);
     }
 
     @Test
@@ -76,12 +76,12 @@ public class Admin_ServiceTest {
         when(admin_validation.validatebook(book)).thenReturn(null);
 
         
-        ResponseEntity<String> updated = admin_Service.updatebook(book);
+        String updated = admin_Service.updatebook(book);
 
         
         assertNotNull(updated);
-        assertNotNull(updated.getBody());
+        assertNotNull(updated);
         verify(book_repo, times(1)).save(book);
-        assertEquals("Book updated successfully", updated.getBody());
+        assertEquals("Book updated successfully", updated);
     }
 }
