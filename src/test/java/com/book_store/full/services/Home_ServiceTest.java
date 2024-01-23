@@ -24,6 +24,7 @@ import com.book_store.full.data.UserResponse;
 import com.book_store.full.repository.Book_Repo;
 import com.book_store.full.repository.User_Repo;
 import com.book_store.full.security.UserInfoUserDetailsService;
+import com.book_store.full.validation.Home_Service_validation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -36,6 +37,7 @@ import static org.mockito.Mockito.*;
 import org.springframework.security.core.Authentication;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
@@ -71,6 +73,9 @@ public class Home_ServiceTest {
 
     @InjectMocks
     private Home_Service home_Service;
+
+    @Mock
+    private Home_Service_validation home_validation;
 
     @Test
     void testHome() {
@@ -114,11 +119,15 @@ public class Home_ServiceTest {
     @Test
     void testAddUser() {
         User user = new User();
-        user.setEmail("test@gmail.com");
+        user.setEmail("mossdftafa19500mahmoud@gmail.com");
+        user.setPassword("Mostafa*10*");
+        user.setPhone("01555331990");
+        user.setRoles("ROLE_ADMIN");
+        user.setName("mahmoud ismail");
 
         when(jwtService.generateToken(anyString())).thenReturn("verificationToken");
         when(user_repo.save(any(User.class))).thenReturn(user);
-
+        when(home_validation.validate_user(any(User.class))).thenReturn(null);
         ResponseEntity<String> result = home_Service.addUser(user);
 
         assertEquals(HttpStatus.OK, result.getStatusCode());
@@ -155,7 +164,6 @@ public class Home_ServiceTest {
                 .thenReturn(authentication);
         when(authentication.isAuthenticated()).thenReturn(true);
         when(jwtService.generateToken(anyString())).thenReturn("token");
-        when(user_Service.get_user(anyString(), anyString(), anyString())).thenReturn(new User());
 
         ResponseEntity<String> token = home_Service.authenticateAndGetToken(authRequest);
 
