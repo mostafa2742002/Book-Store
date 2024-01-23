@@ -15,7 +15,7 @@ public class Home_Service_validation {
         String phone = user.getPhone();
         String role = user.getRoles();
 
-        if (username== null || !username.matches("^[a-zA-Z0-9 ]{3,20}$")) {
+        if (username == null || !username.matches("^[a-zA-Z0-9 ]{3,20}$")) {
             System.out.println(username);
             return "Username must be between 3 and 20 characters long and can only contain letters, numbers, and spaces";
         }   
