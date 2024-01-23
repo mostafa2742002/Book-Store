@@ -54,11 +54,11 @@ public class Home_Controller {
     }
 
     @PostMapping("/home/authenticate")
-    public ResponseEntity<User> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<String> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
         return home_service.authenticateAndGetToken(authRequest);
     }
 
-    @GetMapping("/home/validateToken")
+    @PostMapping("/home/validateToken")
     public ResponseEntity<?> validateToken(@RequestParam String token) {
         return home_service.validateToken(token);
     }

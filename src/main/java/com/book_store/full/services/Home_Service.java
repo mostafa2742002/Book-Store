@@ -15,7 +15,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
 import com.book_store.full.data.AuthRequest;
 import com.book_store.full.data.Book;
 import com.book_store.full.data.User;
@@ -24,9 +23,7 @@ import com.book_store.full.repository.Book_Repo;
 import com.book_store.full.repository.User_Repo;
 import com.book_store.full.security.UserInfoUserDetailsService;
 import com.book_store.full.validation.Home_Service_validation;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+
 import org.apache.catalina.connector.Response;
 
 @Service
@@ -56,8 +53,8 @@ public class Home_Service {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // @Autowired
-    // private Home_Service_validation home_validation;
+    @Autowired
+    private Home_Service_validation home_validation;
 
     public List<Book> home() {
         try {
@@ -102,6 +99,12 @@ public class Home_Service {
 
     public ResponseEntity<String> addUser(User user) {
         try {
+
+            String valid_user = home_validation.validate_user(user);
+            if (valid_user != null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(valid_user);
+            }
+
             String verificationToken = jwtService.generateToken(user.getEmail());
 
             user.setEmailVerified(false);
@@ -110,14 +113,20 @@ public class Home_Service {
 
             User savedUser = user_repo.save(user);
             String subject = "Verify Your Email";
+            // if we use render site then use this
             String body = "Click the link to verify your email: https://bookstore-cs41.onrender.com/home/verifyemail?token="
                     + verificationToken;
+
+            // if we use localhost then use this
+            // String body = "Click the link to verify your email: http://localhost:8080/home/verifyemail?token="
+            //         + verificationToken;
 
             emailService.sendEmail(savedUser.getEmail(), subject, body);
 
             return ResponseEntity.ok("User registered successfully. Check your email for verification.");
 
         } catch (Exception e) {
+            System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error registering user");
 
         }
@@ -145,13 +154,14 @@ public class Home_Service {
         }
     }
 
-    public ResponseEntity<User> authenticateAndGetToken(AuthRequest authRequest) {
+    public ResponseEntity<String> authenticateAndGetToken(AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
 
         if (authentication.isAuthenticated()) {
             String t = jwtService.generateToken(authRequest.getEmail());
-            return ResponseEntity.ok(user_Service.get_user(t, authRequest.getEmail(), authRequest.getPassword()));
+            // return ResponseEntity.ok(user_Service.get_user(t, authRequest.getEmail(), authRequest.getPassword()));
+            return ResponseEntity.ok(t);
 
         } else {
             throw new RuntimeException("Authentication failed");

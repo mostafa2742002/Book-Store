@@ -157,10 +157,10 @@ public class Home_ServiceTest {
         when(jwtService.generateToken(anyString())).thenReturn("token");
         when(user_Service.get_user(anyString(), anyString(), anyString())).thenReturn(new User());
 
-        ResponseEntity<User> result = home_Service.authenticateAndGetToken(authRequest);
+        ResponseEntity<String> token = home_Service.authenticateAndGetToken(authRequest);
 
-        assertEquals(HttpStatus.OK, result.getStatusCode());
-        assertNotNull(result);
+        assertEquals(HttpStatus.OK, token.getStatusCode());
+        assertNotNull(token.getBody());
     }
 
     @Test
