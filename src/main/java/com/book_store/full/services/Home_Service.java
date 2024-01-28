@@ -62,24 +62,21 @@ public class Home_Service {
 
         } catch (Exception e) {
             return Collections.emptyList();
-
         }
     }
 
     public List<Book> resentllyadded() {
         try {
-
             List<Book> books = book_repo.findAll();
 
             if (books.size() > 4) {
                 return books.subList(0, 4);
             }
-            return books;
 
+            return books;
         } catch (Exception e) {
             System.err.println(e);
             return Collections.emptyList();
-
         }
     }
 
@@ -92,7 +89,6 @@ public class Home_Service {
             }
 
             return books;
-
         } catch (Exception e) {
             return Collections.emptyList();
         }
@@ -100,8 +96,8 @@ public class Home_Service {
 
     public ResponseEntity<String> addUser(User user) {
         try {
-
             String valid_user = home_validation.validate_user(user);
+
             if (valid_user != null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(valid_user);
             }
@@ -157,6 +153,12 @@ public class Home_Service {
     }
 
     public ResponseEntity<User> authenticateAndGetToken(AuthRequest authRequest) {
+
+        Optional<User> user = user_repo.findByEmail(authRequest.getEmail());
+        if (user.isEmpty() || !user.get().isEmailVerified()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
 
@@ -167,10 +169,10 @@ public class Home_Service {
 
         } else {
             throw new RuntimeException("Authentication failed");
-
         }
     }
 
+    // to validate the email that sent to the user gmail
     public ResponseEntity<?> validateToken(String token) {
         String email = jwtService.extractEmail(token);
 

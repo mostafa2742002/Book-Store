@@ -47,7 +47,6 @@ public class Admin_ServiceTest {
         String added = admin_Service.addbook(book);
 
         assertNotNull(added);
-        assertNotNull(added);
         verify(book_repo, times(1)).save(book);
         assertEquals("Book added successfully", added);
     }
@@ -62,7 +61,6 @@ public class Admin_ServiceTest {
         String removed = admin_Service.removebook(bookId);
 
         
-        assertNotNull(removed);
         assertNotNull(removed);
         verify(book_repo, times(1)).deleteById(bookId);
         assertEquals("Book removed successfully", removed);
@@ -79,7 +77,6 @@ public class Admin_ServiceTest {
         String updated = admin_Service.updatebook(book);
 
         
-        assertNotNull(updated);
         assertNotNull(updated);
         verify(book_repo, times(1)).save(book);
         assertEquals("Book updated successfully", updated);
