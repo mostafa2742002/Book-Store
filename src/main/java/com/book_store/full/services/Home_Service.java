@@ -68,15 +68,16 @@ public class Home_Service {
 
     public List<Book> resentllyadded() {
         try {
+
             List<Book> books = book_repo.findAll();
 
             if (books.size() > 4) {
                 return books.subList(0, 4);
             }
-
             return books;
 
         } catch (Exception e) {
+            System.err.println(e);
             return Collections.emptyList();
 
         }
@@ -118,8 +119,9 @@ public class Home_Service {
                     + verificationToken;
 
             // if we use localhost then use this
-            // String body = "Click the link to verify your email: http://localhost:8080/home/verifyemail?token="
-            //         + verificationToken;
+            // String body = "Click the link to verify your email:
+            // http://localhost:8080/home/verifyemail?token="
+            // + verificationToken;
 
             emailService.sendEmail(savedUser.getEmail(), subject, body);
 
@@ -154,14 +156,14 @@ public class Home_Service {
         }
     }
 
-    public ResponseEntity<String> authenticateAndGetToken(AuthRequest authRequest) {
+    public ResponseEntity<User> authenticateAndGetToken(AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
 
         if (authentication.isAuthenticated()) {
             String t = jwtService.generateToken(authRequest.getEmail());
-            // return ResponseEntity.ok(user_Service.get_user(t, authRequest.getEmail(), authRequest.getPassword()));
-            return ResponseEntity.ok(t);
+            return ResponseEntity.ok(user_Service.get_user(t, authRequest.getEmail(),
+                    authRequest.getPassword()));
 
         } else {
             throw new RuntimeException("Authentication failed");

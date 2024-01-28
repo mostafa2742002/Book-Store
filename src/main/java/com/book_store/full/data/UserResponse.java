@@ -1,8 +1,10 @@
 package com.book_store.full.data;
 
+import java.io.Serializable;
+
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class UserResponse {
+public class UserResponse  implements Serializable{
 
     private UserDetails userDetails;
     private User user;

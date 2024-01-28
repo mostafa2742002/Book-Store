@@ -34,6 +34,7 @@ public class Home_Controller {
     @GetMapping("/home/resentllyadded")
     @Cacheable(value = "booksRecentlyAdded")
     public List<Book> recentlyAdded() {
+        System.out.println("recently added");
         return home_service.resentllyadded();
     }
 
@@ -54,7 +55,7 @@ public class Home_Controller {
     }
 
     @PostMapping("/home/authenticate")
-    public ResponseEntity<String> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<User> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
         return home_service.authenticateAndGetToken(authRequest);
     }
 

@@ -1,5 +1,6 @@
 package com.book_store.full.data;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -9,7 +10,7 @@ import lombok.Data;
 
 @Data
 @Document(collection = "orders")
-public class Order {
+public class Order implements Serializable{
     
     @Id
     private String id;

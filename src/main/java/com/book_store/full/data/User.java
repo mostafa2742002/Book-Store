@@ -1,5 +1,6 @@
 package com.book_store.full.data;
 
+import java.io.Serializable;
 import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "users")
-public class User {
+public class User implements Serializable{
 
     @Id
     private String id;

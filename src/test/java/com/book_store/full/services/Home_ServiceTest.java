@@ -165,7 +165,7 @@ public class Home_ServiceTest {
         when(authentication.isAuthenticated()).thenReturn(true);
         when(jwtService.generateToken(anyString())).thenReturn("token");
 
-        ResponseEntity<String> token = home_Service.authenticateAndGetToken(authRequest);
+        ResponseEntity<User> token = home_Service.authenticateAndGetToken(authRequest);
 
         assertEquals(HttpStatus.OK, token.getStatusCode());
         assertNotNull(token.getBody());
