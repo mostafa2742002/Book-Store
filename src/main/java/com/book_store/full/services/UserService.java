@@ -16,7 +16,7 @@ import com.book_store.full.repository.User_Repo;
 import com.book_store.full.repository.Order_Repo;
 
 @Service
-public class User_Service {
+public class UserService {
 
     @Autowired
     Book_Repo book_repo;

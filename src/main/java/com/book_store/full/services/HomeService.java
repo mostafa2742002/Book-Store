@@ -22,12 +22,12 @@ import com.book_store.full.data.UserResponse;
 import com.book_store.full.repository.Book_Repo;
 import com.book_store.full.repository.User_Repo;
 import com.book_store.full.security.UserInfoUserDetailsService;
-import com.book_store.full.validation.Home_Service_validation;
+import com.book_store.full.validation.HomeServiceValidation;
 
 import org.apache.catalina.connector.Response;
 
 @Service
-public class Home_Service {
+public class HomeService {
 
     @Autowired
     private JwtService jwtService;
@@ -39,7 +39,7 @@ public class Home_Service {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private User_Service user_Service;
+    private UserService user_Service;
 
     @Autowired
     private UserInfoUserDetailsService userDetailsService;
@@ -54,7 +54,7 @@ public class Home_Service {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private Home_Service_validation home_validation;
+    private HomeServiceValidation home_validation;
 
     public List<Book> home() {
         try {
@@ -65,7 +65,7 @@ public class Home_Service {
         }
     }
 
-    public List<Book> resentllyadded() {
+    public List<Book> resentllyAdded() {
         try {
             List<Book> books = book_repo.findAll();
 
@@ -80,7 +80,7 @@ public class Home_Service {
         }
     }
 
-    public List<Book> topselling() {
+    public List<Book> topSelling() {
         try {
             List<Book> books = book_repo.findAll(Sort.by(Sort.Direction.DESC, "buyed"));
 
@@ -96,7 +96,7 @@ public class Home_Service {
 
     public ResponseEntity<String> addUser(User user) {
         try {
-            String valid_user = home_validation.validate_user(user);
+            String valid_user = home_validation.validateUser(user);
 
             if (valid_user != null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(valid_user);

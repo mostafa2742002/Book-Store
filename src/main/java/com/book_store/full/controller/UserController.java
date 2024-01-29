@@ -14,23 +14,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.book_store.full.data.Book;
 import com.book_store.full.data.Order;
-import com.book_store.full.services.Home_Service;
-import com.book_store.full.services.User_Service;
+import com.book_store.full.services.HomeService;
+import com.book_store.full.services.UserService;
 import com.fasterxml.jackson.databind.JsonNode;
 
 @RestController
 @CrossOrigin(origins = "*")
-public class User_controller {
+public class UserController {
 
     @Autowired
-    User_Service user_service;
+    UserService user_service;
 
     @Autowired
-    private Home_Service home_service;
+    private HomeService home_service;
 
     @PostMapping("/addstar")
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    public ResponseEntity<String> addstar(@RequestBody JsonNode jsonNode) {
+    public ResponseEntity<String> addStar(@RequestBody JsonNode jsonNode) {
         String user_id = jsonNode.get("user_id").asText();
         String book_id = jsonNode.get("book_id").asText();
 
@@ -39,7 +39,7 @@ public class User_controller {
 
     @PostMapping("/removestar")
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    public ResponseEntity<String> removestar(@RequestBody JsonNode jsonNode) {
+    public ResponseEntity<String> removeStar(@RequestBody JsonNode jsonNode) {
         String user_id = jsonNode.get("user_id").asText();
         String book_id = jsonNode.get("book_id").asText();
 
@@ -48,7 +48,7 @@ public class User_controller {
 
     @PostMapping("/addcart")
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    public ResponseEntity<String> addcart(@RequestBody JsonNode jsonNode) {
+    public ResponseEntity<String> addCart(@RequestBody JsonNode jsonNode) {
         String user_id = jsonNode.get("user_id").asText();
         String book_id = jsonNode.get("book_id").asText();
 
@@ -57,7 +57,7 @@ public class User_controller {
 
     @PostMapping("/removecart")
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    public ResponseEntity<String> removecart(@RequestBody JsonNode jsonNode) {
+    public ResponseEntity<String> removeCart(@RequestBody JsonNode jsonNode) {
         String user_id = jsonNode.get("user_id").asText();
         String book_id = jsonNode.get("book_id").asText();
 
@@ -66,20 +66,20 @@ public class User_controller {
 
     @PostMapping("/addorder")
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    public ResponseEntity<String> addorder(@RequestBody Order order) {
+    public ResponseEntity<String> addOrder(@RequestBody Order order) {
         return user_service.addOrder(order);
     }
 
     @PostMapping("/removeorder")
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    public ResponseEntity<String> removeorder(@RequestBody Order order) {
+    public ResponseEntity<String> removeOrder(@RequestBody Order order) {
         return user_service.removeOrder(order);
 
     }
 
     @GetMapping("/getorders")
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    public ResponseEntity<List<Order>> getorders(@RequestParam String user_id) {
+    public ResponseEntity<List<Order>> getOrders(@RequestParam String user_id) {
         return user_service.getOrders(user_id);
     }
 

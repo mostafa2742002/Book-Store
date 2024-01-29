@@ -10,10 +10,10 @@ import com.book_store.full.data.Book;
 import com.book_store.full.data.User;
 import com.book_store.full.repository.Book_Repo;
 import com.book_store.full.repository.User_Repo;
-import com.book_store.full.validation.Admin_Service_validation;
+import com.book_store.full.validation.AdminServiceValidation;
 
 @Service
-public class Admin_Service {
+public class AdminService {
 
     @Autowired
     Book_Repo book_repo;
@@ -22,11 +22,11 @@ public class Admin_Service {
     User_Repo user_repo;
 
     @Autowired
-    Admin_Service_validation admin_validation;
+    AdminServiceValidation admin_validation;
 
-    public String addbook(Book book) {
+    public String addBook(Book book) {
         try {
-            String response = admin_validation.validatebook(book);
+            String response = admin_validation.validateBook(book);
 
             if (response != null) {
                 return response;
@@ -41,9 +41,9 @@ public class Admin_Service {
 
     }
 
-    public String removebook(String book_id) {
+    public String removeBook(String book_id) {
         try {
-            String response = admin_validation.validatebookid(book_id);
+            String response = admin_validation.validateBookId(book_id);
 
             if (response != null) {
                 return response;
@@ -57,11 +57,11 @@ public class Admin_Service {
         }
     }
 
-    public String updatebook(Book book) {
+    public String updateBook(Book book) {
         try {
             String book_id = book.getId();
-            String response = admin_validation.validatebookid(book_id);
-            String response2 = admin_validation.validatebook(book);
+            String response = admin_validation.validateBookId(book_id);
+            String response2 = admin_validation.validateBook(book);
 
             if (response != null || response2 != null) {
                 return response;

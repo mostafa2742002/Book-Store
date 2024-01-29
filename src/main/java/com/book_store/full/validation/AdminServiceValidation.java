@@ -9,12 +9,12 @@ import com.book_store.full.data.User;
 import com.book_store.full.repository.Book_Repo;
 
 @Component
-public class Admin_Service_validation {
+public class AdminServiceValidation {
 
     @Autowired
     Book_Repo book_repo;
 
-    public String validatebook(Book book) {
+    public String validateBook(Book book) {
         String title = book.getTitle();
         String author = book.getAuthor();
         String book_information = book.getBook_information();
@@ -40,7 +40,7 @@ public class Admin_Service_validation {
         return null;
     }
 
-    public String validatebookid(String book_id) {
+    public String validateBookId(String book_id) {
         if (book_id == null || book_id.length() == 0) {
             return "Book id cannot be empty";
         }
@@ -50,7 +50,7 @@ public class Admin_Service_validation {
         return null;
     }
 
-    public String validateuser(User user) {
+    public String validateUser(User user) {
         String username = user.getName();
         String password = user.getPassword();
         String email = user.getEmail();

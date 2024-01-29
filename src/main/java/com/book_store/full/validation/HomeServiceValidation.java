@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 import com.book_store.full.data.User;
 
 @Component
-public class Home_Service_validation {
+public class HomeServiceValidation {
 
-    public String validate_user(User user) {
+    public String validateUser(User user) {
 
         String username = user.getName();
         String password = user.getPassword();

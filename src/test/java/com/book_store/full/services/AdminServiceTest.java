@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import com.book_store.full.data.Book;
 import com.book_store.full.repository.Book_Repo;
 import com.book_store.full.repository.User_Repo;
-import com.book_store.full.validation.Admin_Service_validation;
+import com.book_store.full.validation.AdminServiceValidation;
 
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
 @SpringJUnitConfig
-public class Admin_ServiceTest {
+public class AdminServiceTest {
 
     @Mock
     private Book_Repo book_repo;
@@ -31,20 +31,20 @@ public class Admin_ServiceTest {
     private User_Repo user_repo;
 
     @InjectMocks
-    private Admin_Service admin_Service;
+    private AdminService admin_Service;
 
     @Mock
-    private Admin_Service_validation admin_validation;
+    private AdminServiceValidation admin_validation;
 
     @Test
     void testAddBook() {
         
         Book book = new Book();
-        when(admin_validation.validatebook(book)).thenReturn(null); 
+        when(admin_validation.validateBook(book)).thenReturn(null); 
 
 
         
-        String added = admin_Service.addbook(book);
+        String added = admin_Service.addBook(book);
 
         assertNotNull(added);
         verify(book_repo, times(1)).save(book);
@@ -55,10 +55,10 @@ public class Admin_ServiceTest {
     void testRemoveBook() {
         
         String bookId = "123";
-        when(admin_validation.validatebookid(bookId)).thenReturn(null);
+        when(admin_validation.validateBookId(bookId)).thenReturn(null);
 
         
-        String removed = admin_Service.removebook(bookId);
+        String removed = admin_Service.removeBook(bookId);
 
         
         assertNotNull(removed);
@@ -70,11 +70,11 @@ public class Admin_ServiceTest {
     void testUpdateBook() {
         
         Book book = new Book();
-        when(admin_validation.validatebookid(book.getId())).thenReturn(null);
-        when(admin_validation.validatebook(book)).thenReturn(null);
+        when(admin_validation.validateBookId(book.getId())).thenReturn(null);
+        when(admin_validation.validateBook(book)).thenReturn(null);
 
         
-        String updated = admin_Service.updatebook(book);
+        String updated = admin_Service.updateBook(book);
 
         
         assertNotNull(updated);

@@ -19,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.book_store.full.filter.jwtAuthFilter;
+import com.book_store.full.filter.JwtAuthFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -27,7 +27,7 @@ import com.book_store.full.filter.jwtAuthFilter;
 public class SecurityConfig {
 
     @Autowired
-    private jwtAuthFilter authFilter;
+    private JwtAuthFilter authFilter;
 
     @Bean
     // authentication

@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.book_store.full.data.Book;
-import com.book_store.full.services.Admin_Service;
+import com.book_store.full.services.AdminService;
 
 @RestController
 @CrossOrigin(origins = "*")
-public class Admin_controller {
+public class AdminController {
 
     @Autowired
-    Admin_Service admin_service;
+    AdminService admin_service;
 
     @PostMapping("/addbook")
     @Caching(evict = {
@@ -29,7 +29,7 @@ public class Admin_controller {
     })
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String addBook(@RequestBody Book book) {
-        return admin_service.addbook(book);
+        return admin_service.addBook(book);
     }
 
     @PostMapping("/removebook")
@@ -40,7 +40,7 @@ public class Admin_controller {
     })
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String removeBook(@RequestBody String book_id) {
-        return admin_service.removebook(book_id);
+        return admin_service.removeBook(book_id);
     }
 
     @PostMapping("/updatebook")
@@ -51,7 +51,7 @@ public class Admin_controller {
     })
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String updateBook(@RequestBody Book book) {
-        return admin_service.updatebook(book);
+        return admin_service.updateBook(book);
     }
 
     // get all orders

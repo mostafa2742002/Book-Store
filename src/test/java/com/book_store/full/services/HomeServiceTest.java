@@ -24,7 +24,7 @@ import com.book_store.full.data.UserResponse;
 import com.book_store.full.repository.Book_Repo;
 import com.book_store.full.repository.User_Repo;
 import com.book_store.full.security.UserInfoUserDetailsService;
-import com.book_store.full.validation.Home_Service_validation;
+import com.book_store.full.validation.HomeServiceValidation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -45,7 +45,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
 @SpringJUnitConfig
-public class Home_ServiceTest {
+public class HomeServiceTest {
 
     @Mock
     private JwtService jwtService;
@@ -57,7 +57,7 @@ public class Home_ServiceTest {
     private AuthenticationManager authenticationManager;
 
     @Mock
-    private User_Service user_Service;
+    private UserService user_Service;
 
     @Mock
     private UserInfoUserDetailsService userDetailsService;
@@ -72,10 +72,10 @@ public class Home_ServiceTest {
     private PasswordEncoder passwordEncoder;
 
     @InjectMocks
-    private Home_Service home_Service;
+    private HomeService home_Service;
 
     @Mock
-    private Home_Service_validation home_validation;
+    private HomeServiceValidation home_validation;
 
     @Test
     void testHome() {
@@ -95,7 +95,7 @@ public class Home_ServiceTest {
         List<Book> allBooks = Arrays.asList(new Book(), new Book(), new Book(), new Book());
         when(book_repo.findAll()).thenReturn(allBooks);
 
-        List<Book> books = home_Service.resentllyadded();
+        List<Book> books = home_Service.resentllyAdded();
 
         verify(book_repo, times(1)).findAll();
         assert books.size() == 4;
@@ -108,7 +108,7 @@ public class Home_ServiceTest {
 
         when(book_repo.findAll(Sort.by(Sort.Direction.DESC, "buyed"))).thenReturn(allBooks);
 
-        List<Book> books = home_Service.topselling();
+        List<Book> books = home_Service.topSelling();
 
         verify(book_repo, times(1)).findAll(Sort.by(Sort.Direction.DESC, "buyed"));
 
@@ -127,7 +127,7 @@ public class Home_ServiceTest {
 
         when(jwtService.generateToken(anyString())).thenReturn("verificationToken");
         when(user_repo.save(any(User.class))).thenReturn(user);
-        when(home_validation.validate_user(any(User.class))).thenReturn(null);
+        when(home_validation.validateUser(any(User.class))).thenReturn(null);
         ResponseEntity<String> result = home_Service.addUser(user);
 
         assertEquals(HttpStatus.OK, result.getStatusCode());
@@ -168,7 +168,7 @@ public class Home_ServiceTest {
                 .thenReturn(authentication);
         when(authentication.isAuthenticated()).thenReturn(true);
         when(jwtService.generateToken(anyString())).thenReturn("token");
-        when(user_Service.get_user(anyString(),anyString(),anyString())).thenReturn(new User());
+        when(user_Service.get_user(anyString(), anyString(), anyString())).thenReturn(new User());
         when(user_repo.findByEmail(authRequest.getEmail())).thenReturn(Optional.of(user));
 
         ResponseEntity<User> res = home_Service.authenticateAndGetToken(authRequest);

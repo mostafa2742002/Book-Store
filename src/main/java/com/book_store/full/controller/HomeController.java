@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.book_store.full.data.AuthRequest;
 import com.book_store.full.data.Book;
 import com.book_store.full.data.User;
-import com.book_store.full.services.Home_Service;
+import com.book_store.full.services.HomeService;
 
 @RestController
 @CrossOrigin(origins = "*")
-public class Home_Controller {
+public class HomeController {
 
     @Autowired
-    private Home_Service home_service;
+    private HomeService home_service;
 
     @GetMapping("/home")
     @Cacheable(value = "booksHome")
@@ -35,13 +35,13 @@ public class Home_Controller {
     @Cacheable(value = "booksRecentlyAdded")
     public List<Book> recentlyAdded() {
         System.out.println("recently added");
-        return home_service.resentllyadded();
+        return home_service.resentllyAdded();
     }
 
     @GetMapping("/home/topselling")
     @Cacheable(value = "booksTopSelling")
     public List<Book> topSelling() {
-        return home_service.topselling();
+        return home_service.topSelling();
     }
 
     @PostMapping("/home/addnewuser")

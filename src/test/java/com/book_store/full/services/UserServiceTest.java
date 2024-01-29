@@ -28,7 +28,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
 @SpringJUnitConfig
-public class User_ServiceTest {
+public class UserServiceTest {
 
     @Mock
     private Book_Repo book_repo;
@@ -40,7 +40,7 @@ public class User_ServiceTest {
     private Order_Repo order_repo;
 
     @InjectMocks
-    private User_Service user_Service;
+    private UserService user_Service;
 
     @Test
     void testAddStar() {
