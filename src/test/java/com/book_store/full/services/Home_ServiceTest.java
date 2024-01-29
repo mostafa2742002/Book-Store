@@ -159,17 +159,22 @@ public class Home_ServiceTest {
         AuthRequest authRequest = new AuthRequest();
         authRequest.setEmail("test@example.com");
         authRequest.setPassword("password");
+
+        User user = new User();
+        user.setEmailVerified(true);
+
         Authentication authentication = mock(Authentication.class);
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(authentication);
         when(authentication.isAuthenticated()).thenReturn(true);
         when(jwtService.generateToken(anyString())).thenReturn("token");
         when(user_Service.get_user(anyString(),anyString(),anyString())).thenReturn(new User());
+        when(user_repo.findByEmail(authRequest.getEmail())).thenReturn(Optional.of(user));
 
-        ResponseEntity<User> user = home_Service.authenticateAndGetToken(authRequest);
+        ResponseEntity<User> res = home_Service.authenticateAndGetToken(authRequest);
 
-        assertEquals(HttpStatus.OK, user.getStatusCode());
-        assertNotNull(user.getBody());
+        assertEquals(HttpStatus.OK, res.getStatusCode());
+        assertNotNull(res.getBody());
     }
 
     @Test
