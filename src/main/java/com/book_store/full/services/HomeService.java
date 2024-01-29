@@ -152,7 +152,7 @@ public class HomeService {
         }
     }
 
-    public ResponseEntity<User> authenticateAndGetToken(AuthRequest authRequest) {
+    public ResponseEntity<String> authenticateAndGetToken(AuthRequest authRequest) {
 
         Optional<User> user = user_repo.findByEmail(authRequest.getEmail());
         if (user.isEmpty() || !user.get().isEmailVerified()) {
@@ -164,8 +164,9 @@ public class HomeService {
 
         if (authentication.isAuthenticated()) {
             String t = jwtService.generateToken(authRequest.getEmail());
-            return ResponseEntity.ok(user_Service.get_user(t, authRequest.getEmail(),
-                    authRequest.getPassword()));
+            // return ResponseEntity.ok(user_Service.get_user(t, authRequest.getEmail(),
+            //         authRequest.getPassword()));
+            return ResponseEntity.ok(t);
 
         } else {
             throw new RuntimeException("Authentication failed");

@@ -168,10 +168,10 @@ public class HomeServiceTest {
                 .thenReturn(authentication);
         when(authentication.isAuthenticated()).thenReturn(true);
         when(jwtService.generateToken(anyString())).thenReturn("token");
-        when(user_Service.get_user(anyString(), anyString(), anyString())).thenReturn(new User());
+        // when(user_Service.get_user(anyString(), anyString(), anyString())).thenReturn(new User());
         when(user_repo.findByEmail(authRequest.getEmail())).thenReturn(Optional.of(user));
 
-        ResponseEntity<User> res = home_Service.authenticateAndGetToken(authRequest);
+        ResponseEntity<String> res = home_Service.authenticateAndGetToken(authRequest);
 
         assertEquals(HttpStatus.OK, res.getStatusCode());
         assertNotNull(res.getBody());

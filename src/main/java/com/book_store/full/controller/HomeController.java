@@ -55,7 +55,7 @@ public class HomeController {
     }
 
     @PostMapping("/home/authenticate")
-    public ResponseEntity<User> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<String> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
         return home_service.authenticateAndGetToken(authRequest);
     }
 
