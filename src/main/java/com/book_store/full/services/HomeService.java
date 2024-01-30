@@ -110,14 +110,14 @@ public class HomeService {
 
             User savedUser = user_repo.save(user);
             String subject = "Verify Your Email";
+
             // if we use render site then use this
             String body = "Click the link to verify your email: https://bookstore-cs41.onrender.com/home/verifyemail?token="
                     + verificationToken;
 
             // if we use localhost then use this
-            // String body = "Click the link to verify your email:
-            // http://localhost:8080/home/verifyemail?token="
-            // + verificationToken;
+            // String body = "Click the link to verify your
+            // email:http://localhost:8080/home/verifyemail?token="+ verificationToken;
 
             emailService.sendEmail(savedUser.getEmail(), subject, body);
 
@@ -165,7 +165,7 @@ public class HomeService {
         if (authentication.isAuthenticated()) {
             String t = jwtService.generateToken(authRequest.getEmail());
             // return ResponseEntity.ok(user_Service.get_user(t, authRequest.getEmail(),
-            //         authRequest.getPassword()));
+            // authRequest.getPassword()));
             return ResponseEntity.ok(t);
 
         } else {
