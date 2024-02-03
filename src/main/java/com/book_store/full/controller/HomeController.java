@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.book_store.full.data.AuthRequest;
+import com.book_store.full.data.AuthResponse;
 import com.book_store.full.data.Book;
 import com.book_store.full.data.User;
 import com.book_store.full.services.HomeService;
@@ -55,17 +56,24 @@ public class HomeController {
     }
 
     @PostMapping("/home/authenticate")
-    public ResponseEntity<String> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<AuthResponse> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
         return home_service.authenticateAndGetToken(authRequest);
     }
 
     @PostMapping("/home/validateToken")
-    public ResponseEntity<?> validateToken(@RequestParam String token) {
+    public ResponseEntity<?> validateToken(@RequestBody AuthResponse t) {
+        String token = t.getAccess_token();
         return home_service.validateToken(token);
+    }
+
+    @PostMapping("/home/refreshtoken")
+    public String refreshToken(@RequestBody AuthResponse token) {
+        return home_service.refreshToken(token.getRefresh_token());
     }
 
     @GetMapping("/home/search")
     public ResponseEntity<List<Book>> search(@RequestParam String search) {
         return home_service.search(search);
     }
+
 }

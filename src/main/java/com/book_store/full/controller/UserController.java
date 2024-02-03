@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.book_store.full.data.AuthResponse;
 import com.book_store.full.data.Book;
 import com.book_store.full.data.Order;
 import com.book_store.full.services.HomeService;

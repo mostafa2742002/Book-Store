@@ -7,12 +7,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.book_store.full.data.Order;
 import com.book_store.full.data.User;
 import com.book_store.full.repository.Book_Repo;
 import com.book_store.full.repository.User_Repo;
+import com.book_store.full.security.UserInfoUserDetailsService;
 import com.book_store.full.repository.Order_Repo;
 
 @Service
@@ -26,6 +28,12 @@ public class UserService {
 
     @Autowired
     Order_Repo order_repo;
+
+    @Autowired
+    private JwtService jwtService;
+
+    @Autowired
+    private UserInfoUserDetailsService userDetailsService;
 
     public ResponseEntity<String> addStar(String userId, String bookId) {
         try {
@@ -235,4 +243,5 @@ public class UserService {
 
         return user;
     }
+
 }

@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.book_store.full.data.AuthRequest;
+import com.book_store.full.data.AuthResponse;
 import com.book_store.full.data.Book;
 import com.book_store.full.data.User;
 import com.book_store.full.data.UserResponse;
@@ -171,7 +172,7 @@ public class HomeServiceTest {
         // when(user_Service.get_user(anyString(), anyString(), anyString())).thenReturn(new User());
         when(user_repo.findByEmail(authRequest.getEmail())).thenReturn(Optional.of(user));
 
-        ResponseEntity<String> res = home_Service.authenticateAndGetToken(authRequest);
+        ResponseEntity<AuthResponse> res = home_Service.authenticateAndGetToken(authRequest);
 
         assertEquals(HttpStatus.OK, res.getStatusCode());
         assertNotNull(res.getBody());

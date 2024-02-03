@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.book_store.full.data.AuthRequest;
+import com.book_store.full.data.AuthResponse;
 import com.book_store.full.data.Book;
 import com.book_store.full.data.User;
 import com.book_store.full.data.UserResponse;
@@ -25,6 +26,8 @@ import com.book_store.full.security.UserInfoUserDetailsService;
 import com.book_store.full.validation.HomeServiceValidation;
 
 import org.apache.catalina.connector.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class HomeService {
@@ -148,11 +151,10 @@ public class HomeService {
 
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid Token");
-
         }
     }
 
-    public ResponseEntity<String> authenticateAndGetToken(AuthRequest authRequest) {
+    public ResponseEntity<AuthResponse> authenticateAndGetToken(AuthRequest authRequest) {
 
         Optional<User> user = user_repo.findByEmail(authRequest.getEmail());
         if (user.isEmpty() || !user.get().isEmailVerified()) {
@@ -163,40 +165,43 @@ public class HomeService {
                 new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
 
         if (authentication.isAuthenticated()) {
-            String t = jwtService.generateToken(authRequest.getEmail());
-            // return ResponseEntity.ok(user_Service.get_user(t, authRequest.getEmail(),
-            // authRequest.getPassword()));
-            return ResponseEntity.ok(t);
+            String access_token = jwtService.generateToken(authRequest.getEmail());
+            String refresh_token = jwtService.generateRefreshToken(authRequest.getEmail());
 
+            AuthResponse t = new AuthResponse(access_token, refresh_token);
+
+            return ResponseEntity.ok(t);
         } else {
             throw new RuntimeException("Authentication failed");
         }
     }
 
-    // to validate the email that sent to the user gmail
     public ResponseEntity<?> validateToken(String token) {
-        String email = jwtService.extractEmail(token);
+        try {
+            String email = jwtService.extractEmail(token);
+            if (email == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid Token");
+            }
 
-        if (email == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid Token");
+            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+
+            if (!jwtService.validateToken(token, userDetails)) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("expired Token or Invalid");
+            }
+
+            Optional<User> user = user_repo.findByEmail(email);
+
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+            // Create a custom response JSON object
+            User user1 = user.get();
+            UserResponse userResponse = new UserResponse(userDetails, user1);
+
+            return ResponseEntity.ok(userResponse);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("expired Token or Invalid");
         }
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-
-        if (!jwtService.validateToken(token, userDetails)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid Token");
-        }
-
-        Optional<User> user = user_repo.findByEmail(email);
-
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-        }
-        // Create a custom response JSON object
-        User user1 = user.get();
-        UserResponse userResponse = new UserResponse(userDetails, user1);
-
-        return ResponseEntity.ok(userResponse);
 
     }
 
@@ -209,6 +214,19 @@ public class HomeService {
                 .findByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContainingOrCategoryIgnoreCaseContainingOrTranslatorIgnoreCaseContainingOrPublisherIgnoreCaseContaining(
                         search, search, search, search, search));
 
+    }
+
+    public String refreshToken(String token) {
+        String email = jwtService.extractEmail(token);
+        if (email == null) {
+            return null;
+        }
+        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+        if (!jwtService.validateToken(token, userDetails)) {
+            return null;
+        }
+
+        return jwtService.generateToken(email);
     }
 
 }
