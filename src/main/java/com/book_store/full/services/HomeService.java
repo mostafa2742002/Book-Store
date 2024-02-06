@@ -18,8 +18,10 @@ import org.springframework.stereotype.Service;
 import com.book_store.full.data.AuthRequest;
 import com.book_store.full.data.AuthResponse;
 import com.book_store.full.data.Book;
+import com.book_store.full.data.BookElasticsearch;
 import com.book_store.full.data.User;
 import com.book_store.full.data.UserResponse;
+import com.book_store.full.repository.BookElasticsearchRepository;
 import com.book_store.full.repository.Book_Repo;
 import com.book_store.full.repository.User_Repo;
 import com.book_store.full.security.UserInfoUserDetailsService;
@@ -58,6 +60,9 @@ public class HomeService {
 
     @Autowired
     private HomeServiceValidation home_validation;
+
+    @Autowired
+    BookElasticsearchRepository book_elastic_repo;
 
     public List<Book> home() {
         try {
@@ -115,15 +120,13 @@ public class HomeService {
             String subject = "Verify Your Email";
 
             // if we use render site then use this
-            String body = "Click the link to verify your email: https://bookstore-cs41.onrender.com/home/verifyemail?token="
-                    + verificationToken;
+            // String body = "Click the link to verify your email: https://bookstore-cs41.onrender.com/home/verifyemail?token="
+            //         + verificationToken;
 
             // if we use localhost then use this
-            // String body = "Click the link to verify your
-            // email:http://localhost:8080/home/verifyemail?token="+ verificationToken;
-
+            String body = "Click the link to verify your email:http://localhost:8080/home/verifyemail?token="+ verificationToken;
             emailService.sendEmail(savedUser.getEmail(), subject, body);
-
+            
             return ResponseEntity.ok("User registered successfully. Check your email for verification.");
 
         } catch (Exception e) {
@@ -205,17 +208,6 @@ public class HomeService {
 
     }
 
-    public ResponseEntity<List<Book>> search(String search) {
-        if (search == null || search.trim().isEmpty()) {
-            return ResponseEntity.ok(Collections.emptyList());
-        }
-
-        return ResponseEntity.ok(book_repo
-                .findByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContainingOrCategoryIgnoreCaseContainingOrTranslatorIgnoreCaseContainingOrPublisherIgnoreCaseContaining(
-                        search, search, search, search, search));
-
-    }
-
     public String refreshToken(String token) {
         String email = jwtService.extractEmail(token);
         if (email == null) {
@@ -227,6 +219,21 @@ public class HomeService {
         }
 
         return jwtService.generateToken(email);
+    }
+
+    public ResponseEntity<List<BookElasticsearch>> search(String search) {
+        if (search == null || search.trim().isEmpty()) {
+            return ResponseEntity.ok(Collections.emptyList());
+        }
+
+        // THE OLD WAY
+        // return ResponseEntity.ok(book_repo
+        // .findByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContainingOrCategoryIgnoreCaseContainingOrTranslatorIgnoreCaseContainingOrPublisherIgnoreCaseContaining(
+        // search, search, search, search, search));
+
+        // THE NEW WAY
+        return ResponseEntity.ok(book_elastic_repo.findByTitleOrAuthorOrCategoryOrTranslatorOrPublisher(search, search,
+                search, search, search));
     }
 
 }

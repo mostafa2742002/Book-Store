@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.book_store.full.data.AuthRequest;
 import com.book_store.full.data.AuthResponse;
 import com.book_store.full.data.Book;
+import com.book_store.full.data.BookElasticsearch;
 import com.book_store.full.data.User;
+import com.book_store.full.repository.BookElasticsearchRepository;
 import com.book_store.full.services.HomeService;
 
 @RestController
@@ -72,7 +74,7 @@ public class HomeController {
     }
 
     @GetMapping("/home/search")
-    public ResponseEntity<List<Book>> search(@RequestParam String search) {
+    public ResponseEntity<List<BookElasticsearch>> search(@RequestParam String search) {
         return home_service.search(search);
     }
 

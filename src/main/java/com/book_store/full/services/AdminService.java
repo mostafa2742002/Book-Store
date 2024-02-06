@@ -7,7 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.book_store.full.data.Book;
+import com.book_store.full.data.BookElasticsearch;
 import com.book_store.full.data.User;
+import com.book_store.full.repository.BookElasticsearchRepository;
 import com.book_store.full.repository.Book_Repo;
 import com.book_store.full.repository.User_Repo;
 import com.book_store.full.validation.AdminServiceValidation;
@@ -24,6 +26,9 @@ public class AdminService {
     @Autowired
     AdminServiceValidation admin_validation;
 
+    @Autowired
+    BookElasticsearchRepository book_elastic_repo;
+
     public String addBook(Book book) {
         try {
             String response = admin_validation.validateBook(book);
@@ -32,7 +37,24 @@ public class AdminService {
                 return response;
             }
 
+            // save to mongodb
             book_repo.save(book);
+            BookElasticsearch book_elastic = new BookElasticsearch();
+            book_elastic.setId(book.getId());
+            book_elastic.setTitle(book.getTitle());
+            book_elastic.setAuthor(book.getAuthor());
+            book_elastic.setCategory(book.getCategory());
+            book_elastic.setTranslator(book.getTranslator());
+            book_elastic.setPublisher(book.getPublisher());
+            book_elastic.setPrice(book.getPrice());
+            book_elastic.setBook_information(book.getBook_information());
+            book_elastic.setAuthor_information(book.getAuthor_information());
+            book_elastic.setImage(book.getImage());
+            book_elastic.setBuyed(book.getBuyed());
+
+            // save to elasticsearch
+            book_elastic_repo.save(book_elastic);
+
             return "Book added successfully";
 
         } catch (Exception e) {

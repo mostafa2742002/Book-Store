@@ -3,6 +3,7 @@ package com.book_store.full.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import jakarta.mail.MessagingException;
@@ -17,7 +18,9 @@ public class EmailService {
         this.javaMailSender = javaMailSender;
     } 
 
-    public void sendEmail(String to, String subject, String text) throws MessagingException {
+    @Async("taskExecutor")
+    public void sendEmail(String to, String subject, String text) throws MessagingException, InterruptedException {
+        Thread.sleep(50000L);
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setFrom("mostafa19500mahmoud@gmail.com");
         msg.setTo(to);

@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.book_store.full.data.AuthRequest;
 import com.book_store.full.data.AuthResponse;
 import com.book_store.full.data.Book;
+import com.book_store.full.data.BookElasticsearch;
 import com.book_store.full.data.User;
 import com.book_store.full.data.UserResponse;
 import com.book_store.full.repository.Book_Repo;
@@ -209,7 +210,7 @@ public class HomeServiceTest {
                         anyString(), anyString(), anyString(), anyString(), anyString()))
                 .thenReturn(expectedBooks);
 
-        ResponseEntity<List<Book>> result = home_Service.search("keyword");
+        ResponseEntity<List<BookElasticsearch>> result = home_Service.search("keyword");
 
         assertEquals(HttpStatus.OK, result.getStatusCode());
         assertEquals(expectedBooks, result.getBody());

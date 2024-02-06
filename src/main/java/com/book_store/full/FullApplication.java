@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.cache.annotation.EnableCaching;
 
 // wellcome
-@SpringBootApplication(exclude = SecurityAutoConfiguration.class) 
+@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 @EnableCaching
 public class FullApplication {
 
@@ -19,4 +19,8 @@ public class FullApplication {
 	// sudo systemctl enable docker
 	// sudo systemctl start docker
 	// sudo systemctl status docker
+
+	// sudo systemctl status elasticsearch.service
+	// sudo systemctl start elasticsearch.service
+	// sudo systemctl stop elasticsearch.service
 }

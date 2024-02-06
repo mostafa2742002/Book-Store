@@ -27,7 +27,7 @@ public class EmailServiceTest {
     private EmailService emailService;
 
     @Test
-    void testSendEmail() throws MessagingException {
+    void testSendEmail() throws MessagingException, InterruptedException {
         // Arrange
         String to = "test@example.com";
         String subject = "Test Subject";
