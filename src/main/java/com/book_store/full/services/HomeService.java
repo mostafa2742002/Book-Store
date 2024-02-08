@@ -22,7 +22,7 @@ import com.book_store.full.data.Book;
 import com.book_store.full.data.BookElasticsearch;
 import com.book_store.full.data.User;
 import com.book_store.full.data.UserResponse;
-// import com.book_store.full.repository.BookElasticsearchRepository;
+import com.book_store.full.repository.BookElasticsearchRepository;
 import com.book_store.full.repository.Book_Repo;
 import com.book_store.full.repository.User_Repo;
 import com.book_store.full.security.UserInfoUserDetailsService;
@@ -71,8 +71,8 @@ public class HomeService {
     @Autowired
     private HomeServiceValidation home_validation;
 
-    // @Autowired
-    // BookElasticsearchRepository book_elastic_repo;
+    @Autowired
+    BookElasticsearchRepository book_elastic_repo;
 
     @Autowired
     private RestTemplate restTemplate;
