@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import com.book_store.full.data.User;
+import com.book_store.full.dto.userdto.User;
 import com.book_store.full.repository.User_Repo;
 
 @Component

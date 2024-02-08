@@ -2,7 +2,7 @@ package com.book_store.full.validation;
 
 import org.springframework.stereotype.Component;
 
-import com.book_store.full.data.User;
+import com.book_store.full.dto.userdto.User;
 
 @Component
 public class HomeServiceValidation {

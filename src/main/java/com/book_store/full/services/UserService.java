@@ -10,8 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.book_store.full.data.Order;
-import com.book_store.full.data.User;
+import com.book_store.full.dto.Order;
+import com.book_store.full.dto.userdto.User;
 import com.book_store.full.repository.Book_Repo;
 import com.book_store.full.repository.User_Repo;
 import com.book_store.full.security.UserInfoUserDetailsService;

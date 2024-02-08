@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import com.book_store.full.data.Book;
-import com.book_store.full.data.User;
+import com.book_store.full.dto.bookdto.Book;
+import com.book_store.full.dto.userdto.User;
 import com.book_store.full.repository.Book_Repo;
 
 @Component

@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.book_store.full.data.AuthResponse;
-import com.book_store.full.data.Book;
-import com.book_store.full.data.Order;
+import com.book_store.full.dto.Order;
+import com.book_store.full.dto.authenticationdto.AuthResponse;
+import com.book_store.full.dto.bookdto.Book;
 import com.book_store.full.services.HomeService;
 import com.book_store.full.services.UserService;
 import com.fasterxml.jackson.databind.JsonNode;

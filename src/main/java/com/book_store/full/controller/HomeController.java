@@ -13,13 +13,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.book_store.full.data.AuthRequest;
-import com.book_store.full.data.AuthResponse;
-import com.book_store.full.data.Book;
-import com.book_store.full.data.BookElasticsearch;
-import com.book_store.full.data.User;
-import com.book_store.full.repository.BookElasticsearchRepository;
+import com.book_store.full.dto.authenticationdto.AuthRequest;
+import com.book_store.full.dto.authenticationdto.AuthResponse;
+import com.book_store.full.dto.bookdto.Book;
+import com.book_store.full.dto.bookdto.BookElasticsearch;
+import com.book_store.full.dto.userdto.User;
+// import com.book_store.full.repository.BookElasticsearchRepository;
 import com.book_store.full.services.HomeService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -48,7 +50,7 @@ public class HomeController {
     }
 
     @PostMapping("/home/addnewuser")
-    public ResponseEntity<String> adduser(@RequestBody User user) {
+    public ResponseEntity<String> adduser(@RequestBody @Valid User user) {
         return home_service.addUser(user);
     }
 

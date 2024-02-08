@@ -1,4 +1,4 @@
-package com.book_store.full.data;
+package com.book_store.full.dto.authenticationdto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

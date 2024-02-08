@@ -9,8 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import com.book_store.full.data.Order;
-import com.book_store.full.data.User;
+import com.book_store.full.dto.Order;
+import com.book_store.full.dto.userdto.User;
 import com.book_store.full.repository.Book_Repo;
 import com.book_store.full.repository.Order_Repo;
 import com.book_store.full.repository.User_Repo;

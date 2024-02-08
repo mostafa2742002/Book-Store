@@ -16,13 +16,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.book_store.full.data.AuthRequest;
-import com.book_store.full.data.AuthResponse;
-import com.book_store.full.data.Book;
-import com.book_store.full.data.BookElasticsearch;
-import com.book_store.full.data.User;
-import com.book_store.full.data.UserResponse;
-import com.book_store.full.repository.BookElasticsearchRepository;
+import com.book_store.full.dto.authenticationdto.AuthRequest;
+import com.book_store.full.dto.authenticationdto.AuthResponse;
+import com.book_store.full.dto.bookdto.Book;
+import com.book_store.full.dto.bookdto.BookElasticsearch;
+import com.book_store.full.dto.userdto.User;
+import com.book_store.full.dto.userdto.UserResponse;
+// import com.book_store.full.repository.BookElasticsearchRepository;
 import com.book_store.full.repository.Book_Repo;
 import com.book_store.full.repository.User_Repo;
 import com.book_store.full.security.UserInfoUserDetailsService;
@@ -71,8 +71,8 @@ public class HomeService {
     @Autowired
     private HomeServiceValidation home_validation;
 
-    @Autowired
-    BookElasticsearchRepository book_elastic_repo;
+    // @Autowired
+    // BookElasticsearchRepository book_elastic_repo;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -120,11 +120,11 @@ public class HomeService {
 
     public ResponseEntity<String> addUser(User user) {
         try {
-            String valid_user = home_validation.validateUser(user);
+            // String valid_user = home_validation.validateUser(user);
 
-            if (valid_user != null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(valid_user);
-            }
+            // if (valid_user != null) {
+            //     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(valid_user);
+            // }
 
             String verificationToken = jwtService.generateToken(user.getEmail());
 

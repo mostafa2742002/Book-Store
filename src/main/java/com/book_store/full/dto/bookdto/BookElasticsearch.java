@@ -1,4 +1,4 @@
-package com.book_store.full.data;
+package com.book_store.full.dto.bookdto;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;

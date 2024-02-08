@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.book_store.full.data.Book;
+import com.book_store.full.dto.bookdto.Book;
 import com.book_store.full.services.AdminService;
 
 @RestController

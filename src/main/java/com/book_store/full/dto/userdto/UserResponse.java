@@ -1,4 +1,4 @@
-package com.book_store.full.data;
+package com.book_store.full.dto.userdto;
 
 import java.io.Serializable;
 

@@ -17,12 +17,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.book_store.full.data.AuthRequest;
-import com.book_store.full.data.AuthResponse;
-import com.book_store.full.data.Book;
-import com.book_store.full.data.BookElasticsearch;
-import com.book_store.full.data.User;
-import com.book_store.full.data.UserResponse;
+import com.book_store.full.dto.authenticationdto.AuthRequest;
+import com.book_store.full.dto.authenticationdto.AuthResponse;
+import com.book_store.full.dto.bookdto.Book;
+import com.book_store.full.dto.bookdto.BookElasticsearch;
+import com.book_store.full.dto.userdto.User;
+import com.book_store.full.dto.userdto.UserResponse;
 import com.book_store.full.repository.Book_Repo;
 import com.book_store.full.repository.User_Repo;
 import com.book_store.full.security.UserInfoUserDetailsService;

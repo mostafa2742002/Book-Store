@@ -1,10 +1,12 @@
-package com.book_store.full.data;
+package com.book_store.full.dto;
 
 import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.book_store.full.dto.bookdto.BookQuantity;
 
 import lombok.Data;
 

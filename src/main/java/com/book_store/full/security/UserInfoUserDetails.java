@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.book_store.full.data.User;
+import com.book_store.full.dto.userdto.User;
 
 public class UserInfoUserDetails implements UserDetails{
 
