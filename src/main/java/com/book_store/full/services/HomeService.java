@@ -256,7 +256,6 @@ public class HomeService {
     }
 
     public String sendRequest(String prompt) {
-        // https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyDopen6fiZzchbVRmOBMbLnrzZQtOLB16Y
         String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + apiKey;
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
