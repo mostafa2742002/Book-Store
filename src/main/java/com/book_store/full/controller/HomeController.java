@@ -74,8 +74,13 @@ public class HomeController {
     }
 
     @GetMapping("/home/search")
-    public ResponseEntity<List<BookElasticsearch>> search(@RequestParam String search) {
+    public ResponseEntity<List<Book>> search(@RequestParam String search) {
         return home_service.search(search);
+    }
+
+    @GetMapping("/generateText")
+    public String generateTextFromTextOnlyInput(@RequestParam String prompt) {
+        return home_service.sendRequest(prompt);
     }
 
 }

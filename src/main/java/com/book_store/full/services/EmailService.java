@@ -20,7 +20,7 @@ public class EmailService {
 
     @Async("taskExecutor")
     public void sendEmail(String to, String subject, String text) throws MessagingException, InterruptedException {
-        Thread.sleep(50000L);
+        // Thread.sleep(50000L);
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setFrom("mostafa19500mahmoud@gmail.com");
         msg.setTo(to);

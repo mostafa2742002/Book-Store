@@ -210,7 +210,7 @@ public class HomeServiceTest {
                         anyString(), anyString(), anyString(), anyString(), anyString()))
                 .thenReturn(expectedBooks);
 
-        ResponseEntity<List<BookElasticsearch>> result = home_Service.search("keyword");
+        ResponseEntity<List<Book>> result = home_Service.search("keyword");
 
         assertEquals(HttpStatus.OK, result.getStatusCode());
         assertEquals(expectedBooks, result.getBody());

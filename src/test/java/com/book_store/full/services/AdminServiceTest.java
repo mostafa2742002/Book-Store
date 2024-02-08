@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.book_store.full.data.Book;
+import com.book_store.full.data.BookElasticsearch;
+import com.book_store.full.repository.BookElasticsearchRepository;
 import com.book_store.full.repository.Book_Repo;
 import com.book_store.full.repository.User_Repo;
 import com.book_store.full.validation.AdminServiceValidation;
@@ -36,12 +38,17 @@ public class AdminServiceTest {
     @Mock
     private AdminServiceValidation admin_validation;
 
+    @Mock
+    private BookElasticsearchRepository book_elastic_repo;
+
     @Test
     void testAddBook() {
         
         Book book = new Book();
+        BookElasticsearch book_elastic = new BookElasticsearch();
         when(admin_validation.validateBook(book)).thenReturn(null); 
-
+        when(book_elastic_repo.save(book_elastic)).thenReturn(null); 
+        when(book_repo.save(book)).thenReturn(book);
 
         
         String added = admin_Service.addBook(book);

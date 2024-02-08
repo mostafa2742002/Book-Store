@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,6 +27,15 @@ import com.book_store.full.repository.Book_Repo;
 import com.book_store.full.repository.User_Repo;
 import com.book_store.full.security.UserInfoUserDetailsService;
 import com.book_store.full.validation.HomeServiceValidation;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.catalina.connector.Response;
 import org.slf4j.Logger;
@@ -63,6 +73,12 @@ public class HomeService {
 
     @Autowired
     BookElasticsearchRepository book_elastic_repo;
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @Value("${google.api.key}")
+    private String apiKey;
 
     public List<Book> home() {
         try {
@@ -120,13 +136,14 @@ public class HomeService {
             String subject = "Verify Your Email";
 
             // if we use render site then use this
-            // String body = "Click the link to verify your email: https://bookstore-cs41.onrender.com/home/verifyemail?token="
-            //         + verificationToken;
+            String body = "Click the link to verify your email: https://bookstore-cs41.onrender.com/home/verifyemail?token="
+                    + verificationToken;
 
             // if we use localhost then use this
-            String body = "Click the link to verify your email:http://localhost:8080/home/verifyemail?token="+ verificationToken;
+            // String body = "Click the link to verify your
+            // email:http://localhost:8080/home/verifyemail?token="+ verificationToken;
             emailService.sendEmail(savedUser.getEmail(), subject, body);
-            
+
             return ResponseEntity.ok("User registered successfully. Check your email for verification.");
 
         } catch (Exception e) {
@@ -221,19 +238,34 @@ public class HomeService {
         return jwtService.generateToken(email);
     }
 
-    public ResponseEntity<List<BookElasticsearch>> search(String search) {
+    public ResponseEntity<List<Book>> search(String search) {
         if (search == null || search.trim().isEmpty()) {
             return ResponseEntity.ok(Collections.emptyList());
         }
 
         // THE OLD WAY
-        // return ResponseEntity.ok(book_repo
-        // .findByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContainingOrCategoryIgnoreCaseContainingOrTranslatorIgnoreCaseContainingOrPublisherIgnoreCaseContaining(
-        // search, search, search, search, search));
+        return ResponseEntity.ok(book_repo
+                .findByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContainingOrCategoryIgnoreCaseContainingOrTranslatorIgnoreCaseContainingOrPublisherIgnoreCaseContaining(
+                        search, search, search, search, search));
 
         // THE NEW WAY
-        return ResponseEntity.ok(book_elastic_repo.findByTitleOrAuthorOrCategoryOrTranslatorOrPublisher(search, search,
-                search, search, search));
+        // return
+        // ResponseEntity.ok(book_elastic_repo.findByTitleOrAuthorOrCategoryOrTranslatorOrPublisher(search,
+        // search,
+        // search, search, search));
     }
 
+    public String sendRequest(String prompt) {
+        // https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyDopen6fiZzchbVRmOBMbLnrzZQtOLB16Y
+        String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + apiKey;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        // this is the request body : "contents":[{"parts":[{"text":"hello"}]}]
+        String body = "{\"contents\":[{\"parts\":[{\"text\":\"" + prompt + "\"}]}]}";
+        HttpEntity<String> requestEntity = new HttpEntity<>(body, headers);
+        ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity,
+                String.class);
+
+        return responseEntity.getBody();
+    }
 }
