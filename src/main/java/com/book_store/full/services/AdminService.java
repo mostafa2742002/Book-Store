@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.book_store.full.dto.bookdto.Book;
-import com.book_store.full.dto.bookdto.BookElasticsearch;
+// import com.book_store.full.dto.bookdto.BookElasticsearch;
 import com.book_store.full.dto.userdto.User;
 // import com.book_store.full.repository.BookElasticsearchRepository;
 import com.book_store.full.repository.Book_Repo;
@@ -41,18 +41,18 @@ public class AdminService {
         book_repo.save(book);
 
         // save to elasticsearch
-        BookElasticsearch book_elastic = new BookElasticsearch();
-        book_elastic.setId(book.getId());
-        book_elastic.setTitle(book.getTitle());
-        book_elastic.setAuthor(book.getAuthor());
-        book_elastic.setCategory(book.getCategory());
-        book_elastic.setTranslator(book.getTranslator());
-        book_elastic.setPublisher(book.getPublisher());
-        book_elastic.setPrice(book.getPrice());
-        book_elastic.setBook_information(book.getBook_information());
-        book_elastic.setAuthor_information(book.getAuthor_information());
-        book_elastic.setImage(book.getImage());
-        book_elastic.setBuyed(book.getBuyed());
+        // BookElasticsearch book_elastic = new BookElasticsearch();
+        // book_elastic.setId(book.getId());
+        // book_elastic.setTitle(book.getTitle());
+        // book_elastic.setAuthor(book.getAuthor());
+        // book_elastic.setCategory(book.getCategory());
+        // book_elastic.setTranslator(book.getTranslator());
+        // book_elastic.setPublisher(book.getPublisher());
+        // book_elastic.setPrice(book.getPrice());
+        // book_elastic.setBook_information(book.getBook_information());
+        // book_elastic.setAuthor_information(book.getAuthor_information());
+        // book_elastic.setImage(book.getImage());
+        // book_elastic.setBuyed(book.getBuyed());
 
         // save to elasticsearch
         // book_elastic_repo.save(book_elastic);

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.book_store.full.dto.bookdto.Book;
-import com.book_store.full.dto.bookdto.BookElasticsearch;
+// import com.book_store.full.dto.bookdto.BookElasticsearch;
 // import com.book_store.full.repository.BookElasticsearchRepository;
 import com.book_store.full.repository.Book_Repo;
 import com.book_store.full.repository.User_Repo;
@@ -45,7 +45,7 @@ public class AdminServiceTest {
     void testAddBook() {
         
         Book book = new Book();
-        BookElasticsearch book_elastic = new BookElasticsearch();
+        // BookElasticsearch book_elastic = new BookElasticsearch();
         // when(admin_validation.validateBook(book)).thenReturn(null); 
         // when(book_elastic_repo.save(book_elastic)).thenReturn(null); 
         when(book_repo.save(book)).thenReturn(book);
