@@ -28,6 +28,8 @@ import com.book_store.full.repository.User_Repo;
 import com.book_store.full.security.UserInfoUserDetailsService;
 import com.book_store.full.validation.HomeServiceValidation;
 
+import jakarta.mail.MessagingException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -119,7 +121,7 @@ public class HomeServiceTest {
     }
 
     @Test
-    void testAddUser() {
+    void testAddUser() throws MessagingException, InterruptedException {
         User user = new User();
         user.setEmail("mossdftafa19500mahmoud@gmail.com");
         user.setPassword("Mostafa*10*");
@@ -129,7 +131,7 @@ public class HomeServiceTest {
 
         when(jwtService.generateToken(anyString())).thenReturn("verificationToken");
         when(user_repo.save(any(User.class))).thenReturn(user);
-        when(home_validation.validateUser(any(User.class))).thenReturn(null);
+        // when(home_validation.validateUser(any(User.class))).thenReturn(null);
         ResponseEntity<String> result = home_Service.addUser(user);
 
         assertEquals(HttpStatus.OK, result.getStatusCode());

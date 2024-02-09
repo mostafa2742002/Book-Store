@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.book_store.full.dto.bookdto.Book;
 import com.book_store.full.services.AdminService;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+
 @RestController
 @CrossOrigin(origins = "*")
 public class AdminController {
@@ -28,7 +31,7 @@ public class AdminController {
             @CacheEvict(value = "booksTopSelling", allEntries = true)
     })
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String addBook(@RequestBody Book book) {
+    public String addBook(@RequestBody @Valid Book book) {
         return admin_service.addBook(book);
     }
 
@@ -39,7 +42,7 @@ public class AdminController {
             @CacheEvict(value = "booksTopSelling", allEntries = true)
     })
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String removeBook(@RequestBody String book_id) {
+    public String removeBook(@RequestBody @NotNull String book_id) {
         return admin_service.removeBook(book_id);
     }
 
@@ -50,7 +53,7 @@ public class AdminController {
             @CachePut(value = "booksTopSelling")
     })
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String updateBook(@RequestBody Book book) {
+    public String updateBook(@RequestBody @Valid Book book) {
         return admin_service.updateBook(book);
     }
 

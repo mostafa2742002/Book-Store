@@ -80,7 +80,7 @@ public class HomeController {
         return home_service.search(search);
     }
 
-    @GetMapping("/generateText")
+    @GetMapping("/home/generatetext")
     public String generateTextFromTextOnlyInput(@RequestParam String prompt) {
         return home_service.sendRequest(prompt);
     }

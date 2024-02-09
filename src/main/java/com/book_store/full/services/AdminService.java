@@ -30,71 +30,61 @@ public class AdminService {
     // BookElasticsearchRepository book_elastic_repo;
 
     public String addBook(Book book) {
-        try {
-            String response = admin_validation.validateBook(book);
 
-            if (response != null) {
-                return response;
-            }
+        // String response = admin_validation.validateBook(book);
 
-            // save to mongodb
-            book_repo.save(book);
-            BookElasticsearch book_elastic = new BookElasticsearch();
-            book_elastic.setId(book.getId());
-            book_elastic.setTitle(book.getTitle());
-            book_elastic.setAuthor(book.getAuthor());
-            book_elastic.setCategory(book.getCategory());
-            book_elastic.setTranslator(book.getTranslator());
-            book_elastic.setPublisher(book.getPublisher());
-            book_elastic.setPrice(book.getPrice());
-            book_elastic.setBook_information(book.getBook_information());
-            book_elastic.setAuthor_information(book.getAuthor_information());
-            book_elastic.setImage(book.getImage());
-            book_elastic.setBuyed(book.getBuyed());
+        // if (response != null) {
+        // return response;
+        // }
 
-            // save to elasticsearch
-            // book_elastic_repo.save(book_elastic);
+        // save to mongodb
+        book_repo.save(book);
 
-            return "Book added successfully";
+        // save to elasticsearch
+        BookElasticsearch book_elastic = new BookElasticsearch();
+        book_elastic.setId(book.getId());
+        book_elastic.setTitle(book.getTitle());
+        book_elastic.setAuthor(book.getAuthor());
+        book_elastic.setCategory(book.getCategory());
+        book_elastic.setTranslator(book.getTranslator());
+        book_elastic.setPublisher(book.getPublisher());
+        book_elastic.setPrice(book.getPrice());
+        book_elastic.setBook_information(book.getBook_information());
+        book_elastic.setAuthor_information(book.getAuthor_information());
+        book_elastic.setImage(book.getImage());
+        book_elastic.setBuyed(book.getBuyed());
 
-        } catch (Exception e) {
-            return "Error while adding book";
-        }
+        // save to elasticsearch
+        // book_elastic_repo.save(book_elastic);
+
+        return "Book added successfully";
 
     }
 
     public String removeBook(String book_id) {
-        try {
-            String response = admin_validation.validateBookId(book_id);
 
-            if (response != null) {
-                return response;
-            }
+        // String response = admin_validation.validateBookId(book_id);
 
-            book_repo.deleteById(book_id);
-            return "Book removed successfully";
+        // if (response != null) {
+        // return response;
+        // }
 
-        } catch (Exception e) {
-            return "Error while adding book";
-        }
+        book_repo.deleteById(book_id);
+        return "Book removed successfully";
     }
 
     public String updateBook(Book book) {
-        try {
-            String book_id = book.getId();
-            String response = admin_validation.validateBookId(book_id);
-            String response2 = admin_validation.validateBook(book);
+        // String book_id = book.getId();
+        // String response = admin_validation.validateBookId(book_id);
+        // String response2 = admin_validation.validateBook(book);
 
-            if (response != null || response2 != null) {
-                return response;
-            }
+        // if (response != null || response2 != null) {
+        //     return response;
+        // }
 
-            book_repo.save(book);
-            return "Book updated successfully";
+        book_repo.save(book);
+        return "Book updated successfully";
 
-        } catch (Exception e) {
-            return "Error while adding book";
-        }
     }
 
 }

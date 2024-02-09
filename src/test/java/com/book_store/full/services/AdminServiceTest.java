@@ -46,7 +46,7 @@ public class AdminServiceTest {
         
         Book book = new Book();
         BookElasticsearch book_elastic = new BookElasticsearch();
-        when(admin_validation.validateBook(book)).thenReturn(null); 
+        // when(admin_validation.validateBook(book)).thenReturn(null); 
         // when(book_elastic_repo.save(book_elastic)).thenReturn(null); 
         when(book_repo.save(book)).thenReturn(book);
 
@@ -62,7 +62,7 @@ public class AdminServiceTest {
     void testRemoveBook() {
         
         String bookId = "123";
-        when(admin_validation.validateBookId(bookId)).thenReturn(null);
+        // when(admin_validation.validateBookId(bookId)).thenReturn(null);
 
         
         String removed = admin_Service.removeBook(bookId);
@@ -77,8 +77,8 @@ public class AdminServiceTest {
     void testUpdateBook() {
         
         Book book = new Book();
-        when(admin_validation.validateBookId(book.getId())).thenReturn(null);
-        when(admin_validation.validateBook(book)).thenReturn(null);
+        // when(admin_validation.validateBookId(book.getId())).thenReturn(null);
+        // when(admin_validation.validateBook(book)).thenReturn(null);
 
         
         String updated = admin_Service.updateBook(book);
