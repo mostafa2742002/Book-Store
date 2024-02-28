@@ -13,6 +13,7 @@ public class FullApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FullApplication.class, args);
 	}
+
 	// sudo systemctl start mongod
 	// sudo systemctl status mongod
 
@@ -23,4 +24,8 @@ public class FullApplication {
 	// sudo systemctl status elasticsearch.service
 	// sudo systemctl start elasticsearch.service
 	// sudo systemctl stop elasticsearch.service
+
+	// notes :
+	// Rate Limiting : based on the user -> 429 too many requests
+	// Load Shedding : based on the server status -> 503 server unavailable
 }

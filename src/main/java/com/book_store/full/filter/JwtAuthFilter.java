@@ -31,7 +31,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
-        return path.startsWith("/home");
+        // we are not filtering the urls that are not related to home and the actuator
+        return path.startsWith("/home") || path.startsWith("/actuator");
     }
 
     @Override
