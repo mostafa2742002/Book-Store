@@ -30,6 +30,11 @@ public class HomeController {
     @Autowired
     private HomeService home_service;
 
+    @PostMapping("/home/welcome")
+    public String welcome() { // to get the csrf token
+        return "Welcome to the Book Store";
+    }
+
     @GetMapping("/home")
     @Cacheable(value = "booksHome")
     public List<Book> home() {
