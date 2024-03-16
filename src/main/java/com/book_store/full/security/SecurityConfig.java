@@ -62,18 +62,18 @@ public class SecurityConfig {
                 .securityContext((context) -> context.requireExplicitSave(false))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
 
-                // .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
-                //     @Override
-                //     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-                //         CorsConfiguration config = new CorsConfiguration();
-                //         config.setAllowedOrigins(Collections.singletonList("*"));
-                //         config.setAllowedMethods(Collections.singletonList("*"));
-                //         config.setAllowCredentials(true);
-                //         config.setAllowedHeaders(Collections.singletonList("*"));
-                //         config.setMaxAge(3600L);
-                //         return config;
-                //     }
-                // }))
+                .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
+                    @Override
+                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+                        CorsConfiguration config = new CorsConfiguration();
+                        config.setAllowedOrigins(Collections.singletonList("*"));
+                        config.setAllowedMethods(Collections.singletonList("*"));
+                        config.setAllowCredentials(true);
+                        config.setAllowedHeaders(Collections.singletonList("*"));
+                        // config.setMaxAge(3600L);
+                        return config;
+                    }
+                }))
 
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/home", "/home/**", "/actuator/**")
