@@ -93,7 +93,7 @@ public class SecurityConfig {
                 // .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
-                .httpBasic(Customizer.withDefaults())
+                // .httpBasic(Customizer.withDefaults())
                 .build();
         // .cors(Customizer.withDefaults())
     }
