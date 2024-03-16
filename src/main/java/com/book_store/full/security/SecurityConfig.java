@@ -59,8 +59,8 @@ public class SecurityConfig {
         requestHandler.setCsrfRequestAttributeName("_csrf");
 
         return http
-                .securityContext((context) -> context.requireExplicitSave(false))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+                // .securityContext((context) -> context.requireExplicitSave(false))
+                // .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
 
                 .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
                     @Override

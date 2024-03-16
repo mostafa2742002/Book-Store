@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.cache.annotation.EnableCaching;
 
 // wellcome
-// @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
-@SpringBootApplication
+@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+// @SpringBootApplication
 @EnableCaching
 public class FullApplication {
 
