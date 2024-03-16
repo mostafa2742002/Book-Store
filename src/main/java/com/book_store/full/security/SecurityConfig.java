@@ -84,12 +84,13 @@ public class SecurityConfig {
                         .authenticated())
 
                 .csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler)
-                        .ignoringRequestMatchers("/home/authenticate","/home/validateToken","/addstar","/removestar","/addcart","/removecart","/home/welcome")
+                        .ignoringRequestMatchers("/home/authenticate", "/home/validateToken", "/addstar", "/removestar",
+                                "/addcart", "/removecart", "/home/welcome")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .addFilterAfter(new CsrfCookieFilter(), UsernamePasswordAuthenticationFilter.class)
 
                 // .sessionManagement(management -> management
-                //         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
@@ -118,6 +119,8 @@ public class SecurityConfig {
 // MvcRequestMatcher
 // .requestMatchers(antMatcher("/home"), antMatcher("/home/addnewuser"),
 // antMatcher("/home/authenticate"))
-// .requestMatchers("/home", "/home/addnewuser", "/home/authenticate", "/home/topselling",
-//                                 "/home/resentllyadded", "/home/validateToken", "/home/addnewuser", "/home/verifyemail",
-//                                 "/home/search", "/home/refreshtoken", "/home/generatetext", "/actuator/**")
+// .requestMatchers("/home", "/home/addnewuser", "/home/authenticate",
+// "/home/topselling",
+// "/home/resentllyadded", "/home/validateToken", "/home/addnewuser",
+// "/home/verifyemail",
+// "/home/search", "/home/refreshtoken", "/home/generatetext", "/actuator/**")
