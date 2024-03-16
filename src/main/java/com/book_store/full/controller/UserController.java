@@ -20,7 +20,7 @@ import com.book_store.full.services.UserService;
 import com.fasterxml.jackson.databind.JsonNode;
 
 @RestController
-// @CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired

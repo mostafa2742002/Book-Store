@@ -18,7 +18,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 @RestController
-// @CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*")
 public class AdminController {
 
     @Autowired

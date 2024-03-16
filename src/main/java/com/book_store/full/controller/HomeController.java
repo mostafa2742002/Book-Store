@@ -24,7 +24,7 @@ import com.book_store.full.services.HomeService;
 import jakarta.validation.Valid;
 
 @RestController
-// @CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*")
 public class HomeController {
 
     @Autowired
