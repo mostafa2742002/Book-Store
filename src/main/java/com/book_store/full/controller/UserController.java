@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.book_store.full.dto.Order;
-import com.book_store.full.dto.authenticationdto.AuthResponse;
-import com.book_store.full.dto.bookdto.Book;
-import com.book_store.full.services.HomeService;
 import com.book_store.full.services.UserService;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -25,9 +22,6 @@ public class UserController {
 
     @Autowired
     UserService user_service;
-
-    @Autowired
-    private HomeService home_service;
 
     @PostMapping("/addstar")
     @PreAuthorize("hasAuthority('ROLE_USER')")
