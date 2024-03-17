@@ -29,5 +29,4 @@ public class FullApplication {
 	// Rate Limiting : based on the user -> 429 too many requests
 	// Load Shedding : based on the server status -> 503 server unavailable
 
-	// sudo systemctl status logstash.service
 }
