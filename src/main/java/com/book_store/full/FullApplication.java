@@ -7,9 +7,9 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 // wellcome
-// @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
-@SpringBootApplication
-@EnableWebSecurity(debug = true)
+@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+// @SpringBootApplication
+// @EnableWebSecurity(debug = true)
 @EnableCaching
 public class FullApplication {
 
