@@ -120,11 +120,13 @@ public class HomeService {
 
     public ResponseEntity<String> addUser(User user) {
         try {
-            // String valid_user = home_validation.validateUser(user);
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User is null");
+            }
 
-            // if (valid_user != null) {
-            //     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(valid_user);
-            // }
+            if (user_repo.findByEmail(user.getEmail()).isPresent()) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exists");
+            }
 
             String verificationToken = jwtService.generateToken(user.getEmail());
 

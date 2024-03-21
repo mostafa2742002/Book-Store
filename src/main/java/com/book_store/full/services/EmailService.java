@@ -18,7 +18,7 @@ public class EmailService {
         this.javaMailSender = javaMailSender;
     } 
 
-    @Async("taskExecutor")
+    // @Async("taskExecutor")
     public void sendEmail(String to, String subject, String text) throws MessagingException, InterruptedException {
         // Thread.sleep(50000L);
         SimpleMailMessage msg = new SimpleMailMessage();
