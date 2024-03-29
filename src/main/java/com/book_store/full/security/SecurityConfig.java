@@ -59,7 +59,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/home", "/home/addnewuser", "/home/authenticate", "/home/topselling",
                                 "/home/resentllyadded", "/home/validateToken", "/home/addnewuser", "/home/verifyemail",
-                                "/home/search", "/home/refreshtoken", "/home/generatetext")
+                                "/home/search", "/home/refreshtoken", "/home/generatetext", "/home/validateToken")
                         .permitAll())
                 .authorizeHttpRequests(requests -> requests
                         .anyRequest()
