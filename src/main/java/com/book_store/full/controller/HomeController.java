@@ -69,7 +69,7 @@ public class HomeController {
         return home_service.authenticateAndGetToken(authRequest);
     }
 
-    @PostMapping("/home/validateToken")
+    @PostMapping("/home/validatetoken")
     public ResponseEntity<?> validateToken(@RequestBody AuthResponse t) {
         String token = t.getAccess_token();
         return home_service.validateToken(token);
