@@ -121,11 +121,11 @@ public class HomeService {
     public ResponseEntity<String> addUser(User user) {
         try {
             if (user == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User is null");
+                throw new IllegalArgumentException("User is null");
             }
 
             if (user_repo.findByEmail(user.getEmail()).isPresent()) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exists");
+                throw new IllegalArgumentException("Email already exist");
             }
 
             String verificationToken = jwtService.generateToken(user.getEmail());
@@ -151,7 +151,6 @@ public class HomeService {
         } catch (Exception e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error registering user");
-
         }
     }
 
@@ -179,8 +178,12 @@ public class HomeService {
     public ResponseEntity<AuthResponse> authenticateAndGetToken(AuthRequest authRequest) {
 
         Optional<User> user = user_repo.findByEmail(authRequest.getEmail());
-        if (user.isEmpty() || !user.get().isEmailVerified()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        if (user.isEmpty()) {
+            throw new RuntimeException("User not found");
+        }
+
+        if (!user.get().isEmailVerified()) {
+            throw new RuntimeException("Email not verified");
         }
 
         Authentication authentication = authenticationManager.authenticate(
