@@ -205,19 +205,19 @@ public class HomeService {
         try {
             String email = jwtService.extractEmail(token);
             if (email == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid Token");
+                throw new RuntimeException("Invalid Token");
             }
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
             if (!jwtService.validateToken(token, userDetails)) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("expired Token or Invalid");
+                throw new RuntimeException("expired Token or Invalid");
             }
 
             Optional<User> user = user_repo.findByEmail(email);
 
             if (user == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+                throw new RuntimeException("User not found");
             }
             // Create a custom response JSON object
             User user1 = user.get();
@@ -233,11 +233,11 @@ public class HomeService {
     public String refreshToken(String token) {
         String email = jwtService.extractEmail(token);
         if (email == null) {
-            return null;
+            throw new RuntimeException("Invalid Token");
         }
         UserDetails userDetails = userDetailsService.loadUserByUsername(email);
         if (!jwtService.validateToken(token, userDetails)) {
-            return null;
+            throw new RuntimeException("expired Token or Invalid");
         }
 
         return jwtService.generateToken(email);
