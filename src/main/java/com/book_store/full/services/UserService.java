@@ -166,7 +166,11 @@ public class UserService {
             if (orders.contains(savedOrder.getId())) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Order already associated with the user");
             }
+            // get the last order saved in the satabase
+            Order lastOrder = order_repo.findTopByNumberByNumberDesc();
+            int get_last_number = lastOrder.getNumber();
 
+            savedOrder.setNumber(get_last_number + 1);
             orders.add(savedOrder.getId());
             user.setOrder(orders);
             user_repo.save(user);
@@ -242,6 +246,48 @@ public class UserService {
         user.setToken(t);
 
         return user;
+    }
+
+    public ResponseEntity<String> updateUser(String user_id, String name, String phone, String image) {
+        try {
+            User user = user_repo.findById(user_id).orElse(null);
+
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+
+            if (name != null && !name.isEmpty())
+                user.setName(name);
+            if (phone != null && !phone.isEmpty())
+                user.setPhone(phone);
+            if (image != null && !image.isEmpty())
+                user.setImage(image);
+
+            user_repo.save(user);
+
+            return ResponseEntity.status(HttpStatus.OK).body("User updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating user");
+        }
+    }
+
+    public ResponseEntity<Integer> getOrderByNumber(String number, String user_id) {
+        try {
+            Order order = order_repo.findByNumber(Integer.parseInt(number));
+
+            if (order == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+
+            if (!order.getUser_id().equals(user_id)
+                    && !userDetailsService.loadUserByUsername(user_id).getAuthorities().contains("ROLE_ADMIN")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(Integer.parseInt(number));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
 }

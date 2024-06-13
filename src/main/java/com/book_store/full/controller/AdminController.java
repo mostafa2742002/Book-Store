@@ -7,8 +7,11 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.book_store.full.dto.bookdto.Book;
@@ -56,6 +59,19 @@ public class AdminController {
     public String updateBook(@RequestBody @Valid Book book) {
         return admin_service.updateBook(book);
     }
+
+    @GetMapping("/getallorders")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<String> getAllOrders() {
+        return admin_service.getAllOrders();
+    }
+
+    @PutMapping("/updateorderstatus")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<String> updateOrderStatus(@RequestParam String order_id, @RequestParam String status) {
+        return admin_service.updateOrderStatus(order_id, status);
+    }
+
 
     // get all orders
 }

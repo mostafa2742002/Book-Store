@@ -59,7 +59,17 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/home", "/home/addnewuser", "/home/authenticate", "/home/topselling",
                                 "/home/resentllyadded", "/home/validateToken", "/home/addnewuser", "/home/verifyemail",
-                                "/home/search", "/home/refreshtoken", "/home/generatetext", "/home/validatetoken")
+                                "/home/search", "/home/refreshtoken", "/home/generatetext", "/home/validatetoken",
+                                "/v2/api-docs",
+                                "/v3/api-docs",
+                                "/v3/api-docs/**",
+                                "/swagger-resources",
+                                "/swagger-resources/**",
+                                "/configuration/ui",
+                                "/configuration/security",
+                                "/swagger-ui/**",
+                                "/webjars/**",
+                                "/swagger-ui.html")
                         .permitAll())
                 .authorizeHttpRequests(requests -> requests
                         .anyRequest()

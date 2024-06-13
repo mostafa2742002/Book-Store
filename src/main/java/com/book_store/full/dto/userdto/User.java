@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @Document(collection = "users")
 public class User implements Serializable{
 
+    // name, phone, image
     @Id
     private String id;
 

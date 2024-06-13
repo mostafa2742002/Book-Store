@@ -6,13 +6,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.book_store.full.dto.Order;
 import com.book_store.full.dto.bookdto.Book;
 // import com.book_store.full.dto.bookdto.BookElasticsearch;
 import com.book_store.full.dto.userdto.User;
 // import com.book_store.full.repository.BookElasticsearchRepository;
 import com.book_store.full.repository.Book_Repo;
+import com.book_store.full.repository.Order_Repo;
 import com.book_store.full.repository.User_Repo;
 import com.book_store.full.validation.AdminServiceValidation;
+import java.*;
+import java.util.ArrayList;
+
+import jakarta.validation.OverridesAttribute.List;
 
 @Service
 public class AdminService {
@@ -22,6 +28,9 @@ public class AdminService {
 
     @Autowired
     User_Repo user_repo;
+
+    @Autowired
+    Order_Repo order_repo;
 
     @Autowired
     AdminServiceValidation admin_validation;
@@ -79,12 +88,42 @@ public class AdminService {
         // String response2 = admin_validation.validateBook(book);
 
         // if (response != null || response2 != null) {
-        //     return response;
+        // return response;
         // }
 
         book_repo.save(book);
         return "Book updated successfully";
 
+    }
+
+    public ResponseEntity<String> getAllOrders() {
+        ArrayList<Order> orders = (ArrayList<Order>) order_repo.findAll();
+        ArrayList<Order> response = new ArrayList<Order>();
+        for (Order order : orders) {
+            if (order.getStatus().equals("pending")) {
+                response.add(order);
+            }
+        }
+
+        return new ResponseEntity<>(response.toString(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<String> updateOrderStatus(String order_id, String status) {
+
+        if (order_id == null || status == null) {
+            return new ResponseEntity<>("Order id or status is null", HttpStatus.BAD_REQUEST);
+        }
+
+        Order order = order_repo.findById(order_id).orElse(null);
+
+        if (order == null) {
+            return new ResponseEntity<>("Order not found", HttpStatus.NOT_FOUND);
+        }
+
+        order.setStatus(status);
+        order_repo.save(order);
+
+        return new ResponseEntity<>("Order status updated successfully", HttpStatus.OK);
     }
 
 }

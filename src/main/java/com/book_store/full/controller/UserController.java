@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,17 @@ public class UserController {
 
     @Autowired
     UserService user_service;
+
+    @PutMapping("/updateuser")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    public ResponseEntity<String> updateUser(@RequestBody JsonNode jsonNode) {
+        String user_id = jsonNode.get("user_id").asText();
+        String name = jsonNode.get("name").asText();
+        String phone = jsonNode.get("phone").asText();
+        String image = jsonNode.get("image").asText();
+
+        return user_service.updateUser(user_id, name, phone, image);
+    }
 
     @PostMapping("/addstar")
     @PreAuthorize("hasAuthority('ROLE_USER')")
@@ -78,4 +90,9 @@ public class UserController {
         return user_service.getOrders(user_id);
     }
 
+    @GetMapping("/order/number")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    public ResponseEntity<Integer> getOrderByNumber(@RequestParam String number, @RequestParam String user_id) {
+        return user_service.getOrderByNumber(number, user_id);
+    }
 }
