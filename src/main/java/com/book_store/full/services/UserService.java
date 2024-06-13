@@ -167,7 +167,7 @@ public class UserService {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Order already associated with the user");
             }
             // get the last order saved in the satabase
-            Order lastOrder = order_repo.findTopByNumberByNumberDesc();
+            Order lastOrder = order_repo.findTopByOrderByNumberDesc();
             int get_last_number = lastOrder.getNumber();
 
             savedOrder.setNumber(get_last_number + 1);
