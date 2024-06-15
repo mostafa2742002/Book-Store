@@ -160,9 +160,8 @@ public class UserService {
 
 
             // Increment and set the order number
-            Order lastOrder = order_repo.findTopByOrderByNumberDesc();
-            int nextOrderNumber = lastOrder != null ? lastOrder.getNumber() + 1 : 1;
-            order.setNumber(nextOrderNumber);
+            int sum = order_repo.countOrders();
+            order.setNumber(sum + 1);
 
             // Save the order to the database
             order = order_repo.save(order); // Save first to ensure it gets an ID
