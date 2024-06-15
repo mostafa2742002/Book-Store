@@ -149,35 +149,32 @@ public class UserService {
 
     public ResponseEntity<String> addOrder(Order order) {
         try {
-            Order savedOrder = order_repo.save(order);
+            // Find the user associated with the order
+            User user = user_repo.findById(order.getUser_id())
+                    .orElseThrow(() -> new RuntimeException("User not found"));
 
-            User user = user_repo.findById(order.getUser_id()).orElse(null);
-
-            if (user == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-            }
-
+            // Initialize user orders if null
             if (user.getOrder() == null) {
                 user.setOrder(new ArrayList<>());
             }
 
-            List<String> orders = new ArrayList<>(user.getOrder());
 
-            if (orders.contains(savedOrder.getId())) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Order already associated with the user");
-            }
-            // get the last order saved in the satabase
+            // Increment and set the order number
             Order lastOrder = order_repo.findTopByOrderByNumberDesc();
-            int get_last_number = lastOrder.getNumber();
+            int nextOrderNumber = lastOrder != null ? lastOrder.getNumber() + 1 : 1;
+            order.setNumber(nextOrderNumber);
 
-            savedOrder.setNumber(get_last_number + 1);
-            orders.add(savedOrder.getId());
-            user.setOrder(orders);
+            // Save the order to the database
+            order = order_repo.save(order); // Save first to ensure it gets an ID
+
+            // Update user's order list
+            user.getOrder().add(order.getId());
             user_repo.save(user);
 
-            return ResponseEntity.status(HttpStatus.OK).body("Order added successfully");
+            return ResponseEntity.ok("Order added successfully");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding order");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error adding order: " + e.getMessage());
         }
     }
 
@@ -195,7 +192,7 @@ public class UserService {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No orders to remove");
             }
 
-            List<String> orders = new ArrayList<>(user.getOrder());
+            ArrayList<String> orders = new ArrayList<>(user.getOrder());
 
             if (!orders.contains(order.getId())) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Order not found for the user");

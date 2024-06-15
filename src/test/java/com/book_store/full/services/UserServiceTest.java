@@ -118,29 +118,29 @@ public class UserServiceTest {
         assertEquals(0, user.getCart().size());
     }
 
-    // @Test
-    // void testAddOrder() {
-    //     // Arrange
-    //     Order order = new Order();
-    //     order.setId("orderId");
-    //     order.setUser_id("userId");
+    @Test
+    void testAddOrder() {
+        // Arrange
+        Order order = new Order();
+        order.setId("orderId");
+        order.setUser_id("userId");
 
-    //     User user = new User();
-    //     user.setId("userId");
-    //     user.setOrder(new ArrayList<>());
+        User user = new User();
+        user.setId("userId");
+        user.setOrder(new ArrayList<>());
 
-    //     when(order_repo.save(order)).thenReturn(order);
-    //     when(user_repo.findById("userId")).thenReturn(Optional.of(user));
+        when(order_repo.save(order)).thenReturn(order);
+        when(user_repo.findById("userId")).thenReturn(Optional.of(user));
 
-    //     // Act
-    //     ResponseEntity<String> added =  user_Service.addOrder(order);
+        // Act
+        ResponseEntity<String> added =  user_Service.addOrder(order);
 
-    //     // Assert
-    //     verify(order_repo, times(1)).save(order);
-    //     verify(user_repo, times(1)).save(user);
-    //     assertEquals(1, user.getOrder().size());
-    //     assertEquals("Order added successfully", added.getBody());
-    // }
+        // Assert
+        verify(order_repo, times(1)).save(order);
+        verify(user_repo, times(1)).save(user);
+        assertEquals(1, user.getOrder().size());
+        assertEquals("Order added successfully", added.getBody());
+    }
 
     // @Test
     // void testRemoveOrder() {

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
+import java.util.ArrayList;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -45,7 +45,7 @@ public class User implements Serializable{
     private String gender;
     private List<String> cart;
     private List<String> star;
-    private List<String> order;
+    private ArrayList<String> order;
     private boolean emailVerified;
     private String verificationToken;
 
