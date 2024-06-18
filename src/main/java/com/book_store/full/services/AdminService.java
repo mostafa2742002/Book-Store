@@ -96,7 +96,7 @@ public class AdminService {
 
     }
 
-    public ResponseEntity<String> getAllOrders() {
+    public ResponseEntity<ArrayList<Order>> getAllOrders() {
         ArrayList<Order> orders = (ArrayList<Order>) order_repo.findAll();
         ArrayList<Order> response = new ArrayList<Order>();
         for (Order order : orders) {
@@ -105,7 +105,7 @@ public class AdminService {
             }
         }
 
-        return new ResponseEntity<>(response.toString(), HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     public ResponseEntity<String> updateOrderStatus(String order_id, String status) {
