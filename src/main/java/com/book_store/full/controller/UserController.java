@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.book_store.full.dto.Order;
+import com.book_store.full.dto.userdto.UserUpdate;
 import com.book_store.full.services.UserService;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -26,13 +27,9 @@ public class UserController {
 
     @PutMapping("/updateuser")
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    public ResponseEntity<String> updateUser(@RequestBody JsonNode jsonNode) {
-        String user_id = jsonNode.get("user_id").asText();
-        String name = jsonNode.get("name").asText();
-        String phone = jsonNode.get("phone").asText();
-        String image = jsonNode.get("image").asText();
+    public ResponseEntity<String> updateUser(@RequestBody UserUpdate userUpdate) {
 
-        return user_service.updateUser(user_id, name, phone, image);
+        return user_service.updateUser(userUpdate.getUser_id(),userUpdate.getName(),userUpdate.getPhone(), userUpdate.getImage());
     }
 
     @PostMapping("/addstar")
