@@ -125,7 +125,7 @@ public class HomeServiceTest {
         User user = new User();
         user.setEmail("mossdftafa19500mahmoud@gmail.com");
         user.setPassword("Mostafa*10*");
-        user.setPhone("01555331990");
+        user.setPhoneOne("01555331990");
         user.setRoles("ROLE_ADMIN");
         user.setName("mahmoud ismail");
 

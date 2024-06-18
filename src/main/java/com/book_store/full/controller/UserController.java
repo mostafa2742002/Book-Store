@@ -19,6 +19,7 @@ import com.book_store.full.dto.userdto.UserUpdate;
 import com.book_store.full.services.UserService;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.http.MediaType;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(path = "", produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -31,7 +32,8 @@ public class UserController {
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity<String> updateUser(@RequestBody UserUpdate userUpdate) {
 
-        return user_service.updateUser(userUpdate.getUser_id(),userUpdate.getName(),userUpdate.getPhone(), userUpdate.getImage());
+        return user_service.updateUser(userUpdate.getUser_id(), userUpdate.getName(), userUpdate.getPhoneOne(),
+                userUpdate.getPhoneTwo(), userUpdate.getImage(), userUpdate.getPassword());
     }
 
     @PostMapping("/addstar")

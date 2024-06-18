@@ -246,7 +246,8 @@ public class UserService {
         return user;
     }
 
-    public ResponseEntity<String> updateUser(String user_id, String name, String phone, String image) {
+    public ResponseEntity<String> updateUser(String user_id, String name, String phoneOne, String phoneTwo,
+            String image, String password) {
         try {
             User user = user_repo.findById(user_id).orElse(null);
 
@@ -256,10 +257,14 @@ public class UserService {
 
             if (name != null && !name.isEmpty())
                 user.setName(name);
-            if (phone != null && !phone.isEmpty())
-                user.setPhone(phone);
+            if (phoneOne != null && !phoneOne.isEmpty())
+                user.setPhoneOne(phoneOne);
+            if (phoneTwo != null && !phoneTwo.isEmpty())
+                user.setPhoneTwo(phoneTwo);
             if (image != null && !image.isEmpty())
                 user.setImage(image);
+            if (password != null && !password.isEmpty())
+                user.setPassword(password);
 
             user_repo.save(user);
 

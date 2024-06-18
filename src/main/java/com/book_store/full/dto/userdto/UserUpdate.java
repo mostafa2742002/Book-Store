@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 public class UserUpdate {
     private String user_id;
     private String name;
-    private String phone;
+    private String phoneOne;
+    private String phoneTwo;
+    private String password;
     private String image;
 }

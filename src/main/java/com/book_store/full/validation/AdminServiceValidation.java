@@ -54,7 +54,7 @@ public class AdminServiceValidation {
         String username = user.getName();
         String password = user.getPassword();
         String email = user.getEmail();
-        String phone = user.getPhone();
+        // String phone = user.getPhone();
 
         if (username == null || username.length() == 0) {
             return "Username cannot be empty";
@@ -65,9 +65,9 @@ public class AdminServiceValidation {
         if (email == null || email.length() == 0) {
             return "Email cannot be empty";
         }
-        if (phone == null || phone.length() == 0) {
-            return "Phone cannot be empty";
-        }
+        // if (phone == null || phone.length() == 0) {
+            // return "Phone cannot be empty";
+        // }
 
         return null;
     }

@@ -34,7 +34,9 @@ public class User implements Serializable{
 
     @Pattern(regexp = "^[0-9]{11}$",message = "invalid mobile number entered ")
     @NotNull(message = "phone shouldn't be null")
-    private String phone;
+    private String phoneOne;
+
+    private String phoneTwo;
 
     @Pattern(regexp = "ROLE_USER|ROLE_ADMIN",message = "Role must be either ROLE_USER or ROLE_ADMIN")
     @NotNull(message = "role shouldn't be null")

@@ -12,7 +12,7 @@ public class HomeServiceValidation {
         String username = user.getName();
         String password = user.getPassword();
         String email = user.getEmail();
-        String phone = user.getPhone();
+        // String phone = user.getPhone();
         String role = user.getRoles();
 
         if (username == null || !username.matches("^[a-zA-Z0-9 ]{3,20}$")) {
@@ -28,9 +28,9 @@ public class HomeServiceValidation {
             return "Email must be valid";
         }
 
-        if (phone == null || !phone.matches("^[0-9]{11}$")) {
-            return "Phone must be 10 digits long";
-        }
+        // if (phone == null || !phone.matches("^[0-9]{11}$")) {
+            // return "Phone must be 10 digits long";
+        // }
 
         if (role == null || !role.matches("ROLE_USER|ROLE_ADMIN")) {
             return "Role must be either ROLE_USER or ROLE_ADMIN";
