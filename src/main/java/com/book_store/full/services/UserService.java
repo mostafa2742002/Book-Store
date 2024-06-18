@@ -157,7 +157,6 @@ public class UserService {
                 user.setOrder(new ArrayList<>());
             }
 
-
             // Increment and set the order number
             int sum = order_repo.countOrders();
             order.setNumber(sum + 1);
@@ -206,7 +205,7 @@ public class UserService {
         }
     }
 
-    public ResponseEntity<List<Order>> getOrders(String userId) {
+    public ResponseEntity<ArrayList<Order>> getOrders(String userId) {
         try {
             User user = user_repo.findById(userId).orElse(null);
 
@@ -214,16 +213,20 @@ public class UserService {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
 
-            List<String> orderIds = user.getOrder();
+            ArrayList<String> orderIds = user.getOrder();
 
             if (orderIds == null || orderIds.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.OK).body(new ArrayList<>());
             }
 
-            List<Order> orders = new ArrayList<>();
+            ArrayList<Order> orders = new ArrayList<>();
 
             for (String id : orderIds) {
-                order_repo.findById(id).ifPresent(orders::add);
+                Order order = order_repo.findById(id).orElse(null);
+
+                if (order != null) {
+                    orders.add(order);
+                }
             }
 
             return ResponseEntity.status(HttpStatus.OK).body(orders);

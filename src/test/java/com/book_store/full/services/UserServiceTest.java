@@ -180,7 +180,7 @@ public class UserServiceTest {
         when(order_repo.findById("orderId")).thenReturn(Optional.of(order));
 
         // Act
-        ResponseEntity<List<Order>> orders = user_Service.getOrders("userId");
+        ResponseEntity<ArrayList<Order>> orders = user_Service.getOrders("userId");
 
         // Assert
         assertNotNull(orders);
